@@ -13,6 +13,11 @@
         <link rel="stylesheet" href="plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
         <!-- Theme style -->
         <link rel="stylesheet" href="dist/css/adminlte.min.css">
+        <style>
+            .map > svg {
+                height: 100% !important;
+            }
+        </style>
     <!-- #endregion -->
 
     <!-- #region fonts-->
@@ -83,7 +88,7 @@
                         <div class="col-md-8">
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="card-title">US-Visitors Report</h3>
+                                    <h3 class="card-title">World Map</h3>
 
                                     <div class="card-tools">
                                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -99,7 +104,7 @@
                                     <div class="p-1 flex-fill" style="overflow: hidden">
                                         <!-- Map will be created here -->
                                         <div id="world-map-markers" style="height: 325px; overflow: hidden">
-                                        <div class="map"></div>
+                                        <div class="map" style="height: 100%"></div>
                                         </div>
                                     </div>
                                     <div class="card-pane-right bg-success pt-2 pb-2 pl-4 pr-4">
@@ -193,20 +198,26 @@
     <!-- AdminLTE App -->
     <script src="dist/js/adminlte.js"></script>
 
-    <!-- OPTIONAL SCRIPTS -->
-    <script src="dist/js/demo.js"></script>
-
     <!-- PAGE PLUGINS -->
     <!-- jQuery Mapael -->
     <script src="plugins/jquery-mousewheel/jquery.mousewheel.js"></script>
     <script src="plugins/raphael/raphael.min.js"></script>
     <script src="plugins/jquery-mapael/jquery.mapael.min.js"></script>
-    <script src="plugins/jquery-mapael/maps/usa_states.min.js"></script>
+    <script src="plugins/jquery-mapael/maps/world_countries.js"></script>
     <!-- ChartJS -->
     <script src="plugins/chart.js/Chart.min.js"></script>
 
-    <!-- PAGE SCRIPTS -->
-    <script src="dist/js/pages/dashboard2.js"></script>
+    <script>
+        $('#world-map-markers').mapael({
+            map: {
+                name : "world_countries",
+                zoom: {
+                    enabled: true,
+                    maxLevel: 10
+                },
+            },
+        });
+    </script>
     <!-- #endregion -->
 </body>
 </html>
