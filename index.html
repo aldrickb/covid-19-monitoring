@@ -13,9 +13,15 @@
         <link rel="stylesheet" href="plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
         <!-- Theme style -->
         <link rel="stylesheet" href="dist/css/adminlte.min.css">
+        <!-- JQVMap -->
+        <link rel="stylesheet" href="plugins/jqvmap/jqvmap.min.css">
         <style>
-            .map > svg {
-                height: 100% !important;
+            .jqvmap-zoomin, .jqvmap-zoomout {
+                height: 18px;
+                width: 18px;
+                background-color: #fff;
+                color: #000;
+                font-weight: bold;
             }
         </style>
     <!-- #endregion -->
@@ -85,73 +91,50 @@
                 <div class="container-fluid">
                     <br>
                     <div class="row">
-                        <div class="col-md-8">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h3 class="card-title">World Map</h3>
-
-                                    <div class="card-tools">
-                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                        <i class="fas fa-minus"></i>
+                        <div class="col-md-9">
+                            <!-- Map card -->
+                            <div class="card bg-gradient-primary">
+                                <div class="card-header border-0">
+                                <h3 class="card-title">
+                                    <i class="fas fa-map-marker-alt mr-1"></i>
+                                    World Map
+                                </h3>
+                                <div class="card-tools">
+                                    <button type="button"
+                                            class="btn btn-primary btn-sm"
+                                            data-card-widget="collapse"
+                                            data-toggle="tooltip"
+                                            title="Collapse">
+                                    <i class="fas fa-minus"></i>
                                     </button>
-                                    <button type="button" class="btn btn-tool" data-card-widget="remove">
-                                        <i class="fas fa-times"></i>
-                                    </button>
-                                    </div>
                                 </div>
-                                <div class="card-body p-0">
-                                    <div class="d-md-flex">
-                                    <div class="p-1 flex-fill" style="overflow: hidden">
-                                        <!-- Map will be created here -->
-                                        <div id="world-map-markers" style="height: 325px; overflow: hidden">
-                                        <div class="map" style="height: 100%"></div>
-                                        </div>
-                                    </div>
-                                    <div class="card-pane-right bg-success pt-2 pb-2 pl-4 pr-4">
-                                        <div class="description-block mb-4">
-                                        <div class="sparkbar pad" data-color="#fff">90,70,90,70,75,80,70</div>
-                                        <h5 class="description-header">8390</h5>
-                                        <span class="description-text">Visits</span>
-                                        </div>
-                                        <!-- /.description-block -->
-                                        <div class="description-block mb-4">
-                                        <div class="sparkbar pad" data-color="#fff">90,50,90,70,61,83,63</div>
-                                        <h5 class="description-header">30%</h5>
-                                        <span class="description-text">Referrals</span>
-                                        </div>
-                                        <!-- /.description-block -->
-                                        <div class="description-block">
-                                        <div class="sparkbar pad" data-color="#fff">90,50,90,70,61,83,63</div>
-                                        <h5 class="description-header">70%</h5>
-                                        <span class="description-text">Organic</span>
-                                        </div>
-                                        <!-- /.description-block -->
-                                    </div><!-- /.card-pane-right -->
-                                    </div><!-- /.d-md-flex -->
+                                </div>
+                                <div class="card-body">
+                                    <div id="world-map" style="height: 420px; width: 100%;"></div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <div class="info-box mb-3 bg-warning">
                                 <span class="info-box-icon"><i class="fas fa-tag"></i></span>
                                 <div class="info-box-content">
-                                    <span class="info-box-text">Inventory</span>
+                                    <span class="info-box-text">Cases</span>
                                     <span class="info-box-number">5,200</span>
                                 </div>
                             </div>
 
-                            <div class="info-box mb-3 bg-success">
+                            <div class="info-box mb-3 bg-danger">
                                 <span class="info-box-icon"><i class="far fa-heart"></i></span>
                                 <div class="info-box-content">
-                                    <span class="info-box-text">Mentions</span>
+                                    <span class="info-box-text">Deaths</span>
                                     <span class="info-box-number">92,050</span>
                                 </div>
                             </div>
 
-                            <div class="info-box mb-3 bg-danger">
+                            <div class="info-box mb-3 bg-success">
                                 <span class="info-box-icon"><i class="fas fa-cloud-download-alt"></i></span>
                                 <div class="info-box-content">
-                                    <span class="info-box-text">Downloads</span>
+                                    <span class="info-box-text">Recovered</span>
                                     <span class="info-box-number">114,381</span>
                                 </div>
                             </div>
@@ -159,7 +142,7 @@
                             <div class="info-box mb-3 bg-info">
                                 <span class="info-box-icon"><i class="far fa-comment"></i></span>
                                 <div class="info-box-content">
-                                    <span class="info-box-text">Direct Messages</span>
+                                    <span class="info-box-text">Date Updated</span>
                                     <span class="info-box-number">163,921</span>
                                 </div>
                             </div>
@@ -199,24 +182,27 @@
     <script src="dist/js/adminlte.js"></script>
 
     <!-- PAGE PLUGINS -->
-    <!-- jQuery Mapael -->
-    <script src="plugins/jquery-mousewheel/jquery.mousewheel.js"></script>
-    <script src="plugins/raphael/raphael.min.js"></script>
-    <script src="plugins/jquery-mapael/jquery.mapael.min.js"></script>
-    <script src="plugins/jquery-mapael/maps/world_countries.js"></script>
+    <!-- JQVMap -->
+    <script src="plugins/jqvmap/jquery.vmap.min.js"></script>
+    <script src="plugins/jqvmap/maps/jquery.vmap.world.js"></script>
     <!-- ChartJS -->
     <script src="plugins/chart.js/Chart.min.js"></script>
 
     <script>
-        $('#world-map-markers').mapael({
-            map: {
-                name : "world_countries",
-                zoom: {
-                    enabled: true,
-                    maxLevel: 10
-                },
-            },
-        });
+        // World map by jvectormap
+        $('#world-map').vectorMap({
+            map              : 'world_en',
+            backgroundColor  : 'transparent',
+            regionStyle      : {
+                initial: {
+                    fill            : 'rgba(255, 255, 255, 0.7)',
+                    'fill-opacity'  : 1,
+                    stroke          : 'rgba(0,0,0,.2)',
+                    'stroke-width'  : 1,
+                    'stroke-opacity': 1
+                }
+            }
+        })
     </script>
     <!-- #endregion -->
 </body>
