@@ -222,7 +222,19 @@
             }
         });
 
+        // Override maps hover label
         var countries_data;
+        jQuery('#world-map').bind('labelShow.jqvmap',
+            function(event, label, code)
+            {
+                for(var x = 0 ; x < countries_data.length ; x++ ){
+                    if(countries_data[x].countryInfo.iso2 != null && countries_data[x].countryInfo.iso2.toLowerCase() == code){
+                        label.html('<div class="map-tooltip">'+countries_data[x].country+' (Cases: '+countries_data[x].cases+')</div>');
+                    }
+                }
+            }
+        );
+
         $( document ).ready(function() {
             getData();
         });
