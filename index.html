@@ -129,7 +129,7 @@
                                 <span class="info-box-icon"><i class="fas fa-exclamation-triangle"></i></span>
                                 <div class="info-box-content">
                                     <span class="info-box-text">Cases</span>
-                                    <span class="info-box-number">5,200</span>
+                                    <span id="cases_count" class="info-box-number">0</span>
                                 </div>
                             </div>
 
@@ -137,7 +137,7 @@
                                 <span class="info-box-icon"><i class="fas fa-cross"></i></span>
                                 <div class="info-box-content">
                                     <span class="info-box-text">Deaths</span>
-                                    <span class="info-box-number">92,050</span>
+                                    <span id="deaths_count" class="info-box-number">0</span>
                                 </div>
                             </div>
 
@@ -145,7 +145,7 @@
                                 <span class="info-box-icon"><i class="far fa-heart"></i></span>
                                 <div class="info-box-content">
                                     <span class="info-box-text">Recovered</span>
-                                    <span class="info-box-number">114,381</span>
+                                    <span id="recovered_count" class="info-box-number">0</span>
                                 </div>
                             </div>
 
@@ -153,7 +153,7 @@
                                 <span class="info-box-icon"><i class="far fa-clock"></i></span>
                                 <div class="info-box-content">
                                     <span class="info-box-text">Date Updated</span>
-                                    <span class="info-box-number">163,921</span>
+                                    <span id="date_updated" class="info-box-number">0</span>
                                 </div>
                             </div>
 
@@ -222,8 +222,11 @@
             }
         });
 
-        // Override maps hover label
+        // Data
         var countries_data;
+        var all_data;
+
+        // Override maps hover label
         jQuery('#world-map').bind('labelShow.jqvmap',
             function(event, label, code)
             {
@@ -236,10 +239,11 @@
         );
 
         $( document ).ready(function() {
-            getData();
+            getData1();
+            getData2();
         });
 
-        function getData(){
+        function getData1(){
             $.ajax({
                 url: "https://corona.lmao.ninja/countries", 
                 dataType: 'json',
@@ -347,6 +351,35 @@
                     eval(toexe);
                 }
             }
+        }
+    
+        function getData2(){
+            $.ajax({
+                url: "https://corona.lmao.ninja/all", 
+                dataType: 'json',
+                success: function(data){
+                    all_data =  data;
+                    loadSideCards();
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown){
+                    getData2();
+                }
+            });
+        }
+
+        function loadSideCards(){
+            $("#cases_count").html(all_data.cases);
+            $("#deaths_count").html(all_data.deaths);
+            $("#recovered_count").html(all_data.recovered);
+
+            var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            var current_date = new Date(all_data.updated);
+            $("#date_updated").html(months[current_date.getMonth()] + " " + current_date.getDate() + ", " + current_date.getFullYear() + " " + current_date.getHours() + ":" + forceTwoDigit(current_date.getMinutes()) + ":" + forceTwoDigit(current_date.getSeconds()));
+
+        }
+
+        function forceTwoDigit(num){
+            return ("0" + num).slice(-2);
         }
     </script>
     <!-- #endregion -->
