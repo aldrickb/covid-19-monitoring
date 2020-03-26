@@ -20,6 +20,39 @@
         <!-- JQVMap -->
         <link rel="stylesheet" href="plugins/jqvmap/jqvmap.min.css">
         <style>
+            /* #region page color theme */
+            .content-wrapper .content{
+                background-color: #121212;
+            }
+
+            .main-header{
+                background-color: #262626;
+                border-bottom-color: #262626;
+            }
+
+            .main-footer{
+                background-color: #262626;
+                border-top-color: #262626;
+            }
+
+            .main-sidebar{
+                background-color: #404040;
+            }
+
+            .brand-link{
+                background-color: #404040 !important;
+            }
+
+            .active{
+                background-color: #4d4d4d !important;
+            }
+
+            .main-header .nav-link{
+                color: #ffffff !important;
+            }
+             /* #endregion */
+
+            /* #region maps */
             .jqvmap-zoomin, .jqvmap-zoomout {
                 height: 18px;
                 width: 18px;
@@ -28,13 +61,10 @@
                 font-weight: bold;
             }
 
-            .active{
-                background-color: #2e93ff !important;
-            }
-
             #world-map > svg{
                 width: 100%;
             }
+            /* #endregion */
         </style>
     <!-- #endregion -->
 
@@ -55,15 +85,15 @@
                     <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a class="nav-link" style="color: #3b3b3b;">World Map</a>
+                    <a class="nav-link">COVID19 World Map</a>
                 </li>
             </ul>
         </nav>
         <!-- #endregion -->
 
         <!-- #region main sidebar -->
-        <aside class="main-sidebar sidebar-dark-primary elevation-4" style="background-color: #007bff;">
-            <a class="brand-link" style="background-color: #007bff; color: #ffffff; border-bottom: 1px solid #ffffff;">
+        <aside class="main-sidebar sidebar-dark-primary elevation-4">
+            <a class="brand-link" style="color: #ffffff; border-bottom: 1px solid #ffffff;">
                 <i class="brand-image fas fa-chart-bar" style="opacity: .8; margin-top: 8px; margin-left: 1.2rem;"></i>
                 <span class="brand-text font-weight-light">COVID-19</span>
             </a>
