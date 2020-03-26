@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
     <!-- #region meta -->
-        <title>COVID-19 Monitoring Page by aldrickb</title>
+        <title>COVID-19 Monitoring WebApp</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <meta name="description" content="A online monitoring tool for the numbers of cases related to COVID-19.">
-        <meta property="og:title" content="Aldrick Bonaobra | Software Developer" />
-        <meta property="og:description" content="A online monitoring tool for the numbers of cases related to COVID-19." />
+        <meta name="description" content="A online web app monitoring tool for the numbers of cases related to COVID-19.">
+        <meta property="og:title" content="COVID-19 Monitoring WebApp" />
+        <meta property="og:description" content="A online web app monitoring tool for the numbers of cases related to COVID-19." />
         <meta property="og:type" content="website" />
     <!-- #endregion -->
 
@@ -50,6 +50,10 @@
             .main-header .nav-link{
                 color: #ffffff !important;
             }
+
+            .worldmap{
+                background: #003166 !important;
+            }
              /* #endregion */
 
             /* #region maps */
@@ -86,6 +90,12 @@
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
                     <a class="nav-link">COVID19 World Map</a>
+                </li>
+            </ul>
+
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a href="https://github.com/NovelCOVID/api" class="nav-link">Powered by: NovelCOVID/API</a>
                 </li>
             </ul>
         </nav>
@@ -138,7 +148,7 @@
                     <div class="row">
                         <div class="col-md-9">
                             <!-- Map card -->
-                            <div class="card bg-gradient-primary">
+                            <div class="card bg-gradient-primary worldmap">
                                 <div class="card-header border-0">
                                 <h3 class="card-title">
                                     <i class="fas fa-map-marker-alt mr-1"></i>
@@ -209,8 +219,9 @@
                             <div class="info-box mb-3 bg-info">
                                 <span class="info-box-icon"><i class="fas fa-info"></i></span>
                                 <div class="info-box-content">
-                                    <span class="info-box-number">Stay at home!</span>
-                                    <span class="info-box-text">Be a good citizen</span>
+                                    <span class="info-box-number">What is COVID-19?</span>
+                                    <span class="info-box-text">Here is an article for you:</span>
+                                    <span class="info-box-text"><a href="https://www.who.int/health-topics/coronavirus#tab=tab_1" style="color: #ffffff; text-decoration: underline;">"Coronavirus"</a></span>
                                 </div>
                             </div>
                         </div>
