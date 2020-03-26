@@ -122,6 +122,9 @@
                                 <div class="card-body">
                                     <div id="world-map" style="height: 420px; width: 100%;"></div>
                                 </div>
+                                <div id="map1_overlay" class="overlay">
+                                    <i class="fas fa-2x fa-sync-alt fa-spin"></i>
+                                </div>
                             </div>
                         </div>
                         <div class="col-md-3">
@@ -131,6 +134,9 @@
                                     <span class="info-box-text">Cases</span>
                                     <span id="cases_count" class="info-box-number">0</span>
                                 </div>
+                                <div id="sidecard1_overlay" class="overlay">
+                                    <i class="fas fa-2x fa-sync-alt fa-spin"></i>
+                                </div>
                             </div>
 
                             <div class="info-box mb-3 bg-danger">
@@ -138,6 +144,9 @@
                                 <div class="info-box-content">
                                     <span class="info-box-text">Deaths</span>
                                     <span id="deaths_count" class="info-box-number">0</span>
+                                </div>
+                                <div id="sidecard2_overlay" class="overlay">
+                                    <i class="fas fa-2x fa-sync-alt fa-spin"></i>
                                 </div>
                             </div>
 
@@ -147,13 +156,19 @@
                                     <span class="info-box-text">Recovered</span>
                                     <span id="recovered_count" class="info-box-number">0</span>
                                 </div>
+                                <div id="sidecard3_overlay" class="overlay">
+                                    <i class="fas fa-2x fa-sync-alt fa-spin"></i>
+                                </div>
                             </div>
 
                             <div class="info-box mb-3 bg-info">
                                 <span class="info-box-icon"><i class="far fa-clock"></i></span>
                                 <div class="info-box-content">
                                     <span class="info-box-text">Date Updated</span>
-                                    <span id="date_updated" class="info-box-number">0</span>
+                                    <span id="date_updated" class="info-box-number"></span>
+                                </div>
+                                <div id="sidecard4_overlay" class="overlay">
+                                    <i class="fas fa-2x fa-sync-alt fa-spin"></i>
                                 </div>
                             </div>
 
@@ -351,6 +366,8 @@
                     eval(toexe);
                 }
             }
+        
+            $("#map1_overlay").remove();
         }
     
         function getData2(){
@@ -369,13 +386,19 @@
 
         function loadSideCards(){
             $("#cases_count").html(all_data.cases);
+            $("#sidecard1_overlay").remove();
+
             $("#deaths_count").html(all_data.deaths);
+            $("#sidecard2_overlay").remove();
+
             $("#recovered_count").html(all_data.recovered);
+            $("#sidecard3_overlay").remove();
 
             var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
             var current_date = new Date(all_data.updated);
             $("#date_updated").html(months[current_date.getMonth()] + " " + current_date.getDate() + ", " + current_date.getFullYear() + " " + current_date.getHours() + ":" + forceTwoDigit(current_date.getMinutes()) + ":" + forceTwoDigit(current_date.getSeconds()));
-
+            $("#sidecard4_overlay").remove();
+            
         }
 
         function forceTwoDigit(num){
