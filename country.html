@@ -755,28 +755,32 @@
 
         // #region Total number of recoveries Chart
         var donutChartCanvas3 = $('#donutChart3').get(0).getContext('2d');
-        var donutData3        = {
-            labels: [
-                'Todays recoveries', 
-                'Previous recoveries',
-                'Recoveries from other countries'
-            ],
-            datasets: [
-                {
-                data: [10,60,1000],
-                backgroundColor : ['#339966', '#00ff99', '#28a745'],
-                }
-            ]
-        };
+        
         var donutOptions3     = {
             maintainAspectRatio : false,
             responsive : true,
         };
-        var donutChart3 = new Chart(donutChartCanvas3, {
-            type: 'doughnut',
-            data: donutData3,
-            options: donutOptions3      
-        });
+
+        function loadchart7(){
+            var donutData3 = {
+                labels: [
+                    allcountries_data[allcountries_data_index].country + ' recoveries', 
+                    'Recoveries from other countries'
+                ],
+                datasets: [
+                    {
+                    data: [allcountries_data[allcountries_data_index].recovered, all_data.recovered - allcountries_data[allcountries_data_index].recovered],
+                    backgroundColor : ['#339966', '#00ff99', '#28a745'],
+                    }
+                ]
+            };
+
+            var donutChart3 = new Chart(donutChartCanvas3, {
+                type: 'doughnut',
+                data: donutData3,
+                options: donutOptions3      
+            });
+        }
         // #endregion
     </script>
     <!-- #endregion -->
