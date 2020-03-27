@@ -5,6 +5,8 @@ A online monitoring tool for the numbers of cases related to COVID-19 using the 
 ## Screenshots
 
 <img width="95%" src="assets/img/homepage.png">
+<img width="95%" src="assets/img/homepage1.png">
+<img width="95%" src="assets/img/browsepage.png">
 
 ## This is currently online
 
