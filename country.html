@@ -509,6 +509,7 @@
             loadchart1();
             loadchart2();
             loadchart3();
+            loadchart4();
         }
 
         function loadchart2(){
@@ -663,28 +664,32 @@
         
         // #region Overall cases, deaths and recovered Chart
         var pieChartCanvas1 = $('#pieChart1').get(0).getContext('2d');
-        var pieData1        = {
-            labels: [
-                'Active Cases', 
-                'Death',
-                'Recovered'
-            ],
-            datasets: [
-                {
-                data: [700,500,400],
-                backgroundColor : ['#ffc107', '#dc3545', '#28a745'],
-                }
-            ]
-        };
         var pieOptions1     = {
             maintainAspectRatio : false,
             responsive : true,
         };
-        var pieChart1 = new Chart(pieChartCanvas1, {
-            type: 'pie',
-            data: pieData1,
-            options: pieOptions1      
-        });
+        
+        function loadchart4(){
+            var pieData1 = {
+                labels: [
+                    'Active Cases', 
+                    'Death',
+                    'Recovered'
+                ],
+                datasets: [
+                    {
+                    data: [allcountries_data[allcountries_data_index].active, allcountries_data[allcountries_data_index].deaths, allcountries_data[allcountries_data_index].recovered],
+                    backgroundColor : ['#ffc107', '#dc3545', '#28a745'],
+                    }
+                ]
+            };
+
+            var pieChart1 = new Chart(pieChartCanvas1, {
+                type: 'pie',
+                data: pieData1,
+                options: pieOptions1      
+            });
+        }
         // #endregion
 
         // #region Total number of cases Chart
