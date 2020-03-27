@@ -381,6 +381,8 @@
         var allcountries_data_recovered_low;
         var allcountries_data_recovered_high;
         var country_historydata;
+        var country_historydata_cases; 
+        var country_historydata_deaths;
 
         $( document ).ready(function() {
             if(current_country_id == null || current_country_id < 0 ){
@@ -479,6 +481,8 @@
                 dataType: 'json',
                 success: function(data){
                     country_historydata =  data;
+                    country_historydata_cases = Object.entries(country_historydata.timeline.cases);
+                    country_historydata_deaths = Object.entries(country_historydata.timeline.deaths);
                 },
                 error: function(XMLHttpRequest, textStatus, errorThrown){
                     get_country_historydata();
