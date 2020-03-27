@@ -67,12 +67,16 @@
                 color: #ffffff;
             }
 
-            .sidenav-link:hover{
+            .sidenav-link{
                 max-width: 250px;
             }
 
             .sidenav-link:hover{
                 background-color: #4d4d4d !important;
+            }
+
+            .code-hide{
+                display: none;
             }
         </style>
     <!-- #endregion -->
@@ -115,7 +119,7 @@
             <div class="sidebar">
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex" style="border-bottom: 1px solid #ffffff;">
                     <div class="input-group input-group-sm">
-                        <input class="form-control form-control-navbar" type="search" placeholder="Search Country" aria-label="Search Country">
+                        <input id="search_country" class="form-control form-control-navbar" type="search" placeholder="Search Country" aria-label="Search Country">
                         <div class="input-group-append" style="background-color: #fff; background-clip: padding-box; border: 1px solid #ced4da; box-shadow: inset 0 0 0 transparent; height: calc(1.8125rem + 2px);">
                             <button onclick="search()" class="btn btn-navbar" >
                                 <i class="fas fa-search"></i>
@@ -673,8 +677,13 @@
             }
 
             for( var x = 0 ; x < allcountries_data.length ; x++ ){
-                $("#country_list").append('<li class="nav-item sidenav-link code-'+countrylist[x][0]+'"><a href="country?q='+countrylist[x][2]+'"" class="nav-link" style="color: #ffffff;"><img src="'+countrylist[x][1]+'" class="nav-icon" style="margin-bottom:5px; width: 25px;">&nbsp&nbsp<p>'+countrylist[x][0]+'</p></a></li>');
+                $("#country_list").append('<li class="nav-item sidenav-link searchcode '+countrylist[x][0].toLowerCase()+'"><a href="country?q='+countrylist[x][2]+'"" class="nav-link" style="color: #ffffff;"><img src="'+countrylist[x][1]+'" class="nav-icon" style="margin-bottom:5px; width: 25px;">&nbsp&nbsp<p>'+countrylist[x][0]+'</p></a></li>');
             }
+        }
+
+        function search(){
+            $(document).find( ".searchcode" ).removeClass("code-hide");
+            if(!$("#search_country").val() == "") $(document).find( ".searchcode" ).not('[class*="'+$("#search_country").val()+'"]').addClass("code-hide");
         }
 
         // #region Deaths and Recovered over Time Chart
