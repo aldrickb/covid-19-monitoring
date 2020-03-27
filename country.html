@@ -510,6 +510,7 @@
             loadchart2();
             loadchart3();
             loadchart4();
+            loadchart5();
         }
 
         function loadchart2(){
@@ -694,28 +695,32 @@
 
         // #region Total number of cases Chart
         var donutChartCanvas1 = $('#donutChart1').get(0).getContext('2d');
-        var donutData1        = {
-            labels: [
-                'Todays Cases', 
-                'Previous Cases',
-                'Cases from other countries', 
-            ],
-            datasets: [
-                {
-                data: [2,10,400],
-                backgroundColor : ['#331a00', '#ff8000', '#ffc107'],
-                }
-            ]
-        };
         var donutOptions1     = {
             maintainAspectRatio : false,
             responsive : true,
         };
-        var donutChart1 = new Chart(donutChartCanvas1, {
-            type: 'doughnut',
-            data: donutData1,
-            options: donutOptions1      
-        });
+        
+        function loadchart5(){
+            var donutData1  = {
+                labels: [
+                    'Todays Cases', 
+                    'Previous Cases',
+                    'Cases from other countries', 
+                ],
+                datasets: [
+                    {
+                    data: [allcountries_data[allcountries_data_index].todayCases, allcountries_data[allcountries_data_index].cases - allcountries_data[allcountries_data_index].todayCases, all_data.cases - allcountries_data[allcountries_data_index].cases],
+                    backgroundColor : ['#331a00', '#ff8000', '#ffc107'],
+                    }
+                ]
+            };
+
+            var donutChart1 = new Chart(donutChartCanvas1, {
+                type: 'doughnut',
+                data: donutData1,
+                options: donutOptions1      
+            });
+        }
         // #endregion
 
         // #region Total number of deaths Chart
