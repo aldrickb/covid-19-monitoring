@@ -230,7 +230,7 @@
                                 <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-exclamation-triangle"></i></span>
                                 <div class="info-box-content">
                                     <span class="info-box-text">Cases</span>
-                                    <span class="info-box-number">10</span>
+                                    <span id="country_cases" class="info-box-number">0</span>
                                 </div>
                             </div>
                         </div>
@@ -239,7 +239,7 @@
                                 <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-cross"></i></span>
                                 <div class="info-box-content">
                                     <span class="info-box-text">Deaths</span>
-                                    <span class="info-box-number">41,410</span>
+                                    <span id="country_deaths" class="info-box-number">0</span>
                                 </div>
                             </div>
                         </div>
@@ -249,7 +249,7 @@
                                 <span class="info-box-icon bg-success elevation-1"><i class="far fa-heart"></i></span>
                                 <div class="info-box-content">
                                     <span class="info-box-text">Recovered</span>
-                                    <span class="info-box-number">760</span>
+                                    <span id="country_recovered" class="info-box-number">0</span>
                                 </div>
                             </div>
                         </div>
@@ -508,6 +508,7 @@
             // Add load functions for charts here
             loadchart1();
             loadchart2();
+            loadchart3();
         }
 
         function loadchart2(){
@@ -561,6 +562,12 @@
             $("#chart2_value1").parent().html($("#chart2_value1").parent().html() + value1 + "%");
             $("#chart2_value2").parent().html($("#chart2_value2").parent().html() + value2 + "%");
             $("#chart2_value3").parent().html($("#chart2_value3").parent().html() + value3 + "%");
+        }
+
+        function loadchart3(){
+            $("#country_cases").html(allcountries_data[allcountries_data_index].cases);
+            $("#country_deaths").html(allcountries_data[allcountries_data_index].deaths);
+            $("#country_recovered").html(allcountries_data[allcountries_data_index].recovered);
         }
 
         // #region Deaths and Recovered over Time Chart
