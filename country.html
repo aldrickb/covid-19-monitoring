@@ -163,7 +163,7 @@
                             <div class="card">
                                 <div class="card-header border-0">
                                     <div class="d-flex justify-content-between">
-                                        <h3 class="card-title">Deaths and Recovered over Time</h3>
+                                        <h3 class="card-title">Cases and Deaths over Time</h3>
                                     </div>
                                 </div>
                                 <div class="card-body">
@@ -172,10 +172,10 @@
                                     </div>
                                     <div class="d-flex flex-row justify-content-end">
                                         <span class="mr-2" style="color: #ffffff;">
-                                            <i class="fas fa-square" style="color: #e60000;"></i>  Deaths
+                                            <i class="fas fa-square" style="color: #ffc107;"></i>  Cases
                                         </span>
                                         <span style="color: #ffffff;">
-                                            <i class="fas fa-square" style="color: #66ff33;"></i>  Recovered
+                                            <i class="fas fa-square" style="color: #e60000;"></i>  Deaths
                                         </span>
                                     </div>
                                 </div>
@@ -483,6 +483,8 @@
                     country_historydata =  data;
                     country_historydata_cases = Object.entries(country_historydata.timeline.cases);
                     country_historydata_deaths = Object.entries(country_historydata.timeline.deaths);
+
+                    loadchart1();
                 },
                 error: function(XMLHttpRequest, textStatus, errorThrown){
                     get_country_historydata();
@@ -500,69 +502,85 @@
         var intersect = true;
 
         var $visitorsChart = $('#visitors-chart');
-        var visitorsChart  = new Chart($visitorsChart, {
-            data   : {
-            labels  : ['18th', '20th', '22nd', '24th', '26th', '28th', '30th'],
-            datasets: [{
-                type                : 'line',
-                data                : [100, 120, 170, 167, 180, 177, 160],
-                backgroundColor     : 'transparent',
-                borderColor         : '#e60000',
-                pointBorderColor    : '#e60000',
-                pointBackgroundColor: '#e60000',
-                fill                : false
-                // pointHoverBackgroundColor: '#007bff',
-                // pointHoverBorderColor    : '#007bff'
-            },
-                {
-                type                : 'line',
-                data                : [60, 80, 70, 67, 80, 77, 100],
-                backgroundColor     : 'tansparent',
-                borderColor         : '#66ff33',
-                pointBorderColor    : '#66ff33',
-                pointBackgroundColor: '#66ff33',
-                fill                : false
-                // pointHoverBackgroundColor: '#ced4da',
-                // pointHoverBorderColor    : '#ced4da'
-                }]
-            },
-            options: {
-            maintainAspectRatio: false,
-            tooltips           : {
-                mode     : mode,
-                intersect: intersect
-            },
-            hover              : {
-                mode     : mode,
-                intersect: intersect
-            },
-            legend             : {
-                display: false
-            },
-            scales             : {
-                yAxes: [{
-                // display: false,
-                gridLines: {
-                    display      : true,
-                    lineWidth    : '4px',
-                    color        : 'rgba(0, 0, 0, .2)',
-                    zeroLineColor: 'transparent'
+        var visitorsChart;
+        function loadchart1(){
+            var chartlength = 10;
+            var data_label = new Array();
+            var data_linedata1 = new Array();
+            var data_linedata2 = new Array();
+
+            var tempx = 0;
+            for( var x = country_historydata_cases.length - 1 ; x > country_historydata_cases.length - chartlength ; x-- ){
+                data_label[tempx] = country_historydata_cases[x][0];
+                data_linedata1[tempx] = country_historydata_cases[x][1];
+                data_linedata2[tempx++] = country_historydata_deaths[x][1];
+            }
+
+
+            visitorsChart  = new Chart($visitorsChart, {
+                data   : {
+                labels  : data_label.reverse(),
+                datasets: [{
+                    type                : 'line',
+                    data                : data_linedata1.reverse(),
+                    backgroundColor     : 'transparent',
+                    borderColor         : '#ffc107',
+                    pointBorderColor    : '#ffc107',
+                    pointBackgroundColor: '#ffc107',
+                    fill                : false
+                    // pointHoverBackgroundColor: '#007bff',
+                    // pointHoverBorderColor    : '#007bff'
                 },
-                ticks    : $.extend({
-                    beginAtZero : true,
-                    suggestedMax: 200
-                }, ticksStyle)
-                }],
-                xAxes: [{
-                display  : true,
-                gridLines: {
+                    {
+                    type                : 'line',
+                    data                : data_linedata2.reverse(),
+                    backgroundColor     : 'transparent',
+                    borderColor         : '#e60000',
+                    pointBorderColor    : '#e60000',
+                    pointBackgroundColor: '#e60000',
+                    fill                : false
+                    // pointHoverBackgroundColor: '#ced4da',
+                    // pointHoverBorderColor    : '#ced4da'
+                    }]
+                },
+                options: {
+                maintainAspectRatio: false,
+                tooltips           : {
+                    mode     : mode,
+                    intersect: intersect
+                },
+                hover              : {
+                    mode     : mode,
+                    intersect: intersect
+                },
+                legend             : {
                     display: false
                 },
-                ticks    : ticksStyle
-                }]
-            }
-            }
-        });
+                scales             : {
+                    yAxes: [{
+                    // display: false,
+                    gridLines: {
+                        display      : true,
+                        lineWidth    : '4px',
+                        color        : 'rgba(0, 0, 0, .2)',
+                        zeroLineColor: 'transparent'
+                    },
+                    ticks    : $.extend({
+                        beginAtZero : true,
+                        suggestedMax: 200
+                    }, ticksStyle)
+                    }],
+                    xAxes: [{
+                    display  : true,
+                    gridLines: {
+                        display: false
+                    },
+                    ticks    : ticksStyle
+                    }]
+                }
+                }
+            });
+        }
         // #endregion
         
         // #region Overall cases, deaths and recovered Chart
