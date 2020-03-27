@@ -292,7 +292,7 @@
                         <div class="col-md-12">
                             <div class="card card-info">
                                 <div class="card-header">
-                                    <h3 class="card-title">Overall cases, deaths and recovered for PH</h3>
+                                    <h3 class="card-title">Overall cases, deaths and recovered for <span class="other_iso"></span></h3>
                                 </div>
                                 <div class="card-body">
                                     <canvas id="pieChart1" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
@@ -307,7 +307,7 @@
                         <div class="col-md-6">
                             <div class="card card-warning">
                                 <div class="card-header">
-                                    <h3 class="card-title">Total number of PH COVID19 cases vs total global cases</h3>
+                                    <h3 class="card-title">Total number of <span class="other_iso"></span> COVID19 cases vs total global cases</h3>
                                 </div>
                                 <div class="card-body">
                                     <canvas id="donutChart1" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
@@ -320,7 +320,7 @@
                         <div class="col-md-6">
                             <div class="card card-danger">
                                 <div class="card-header">
-                                    <h3 class="card-title">Total number of PH COVID deaths vs total global cases</h3>
+                                    <h3 class="card-title">Total number of <span class="other_iso"></span> COVID deaths vs total global cases</h3>
                                 </div>
                                 <div class="card-body">
                                     <canvas id="donutChart2" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
@@ -335,7 +335,7 @@
                         <div class="col-md-12">
                             <div class="card card-warning">
                                 <div class="card-header">
-                                    <h3 class="card-title">Total number of PH COVID19 recoveries vs total global cases</h3>
+                                    <h3 class="card-title">Total number of <span class="other_iso"></span> COVID19 recoveries vs total global cases</h3>
                                 </div>
                                 <div class="card-body">
                                     <canvas id="donutChart3" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
@@ -559,12 +559,15 @@
             $("#country_name").html(allcountries_data[allcountries_data_index].country);
             if( allcountries_data[allcountries_data_index].countryInfo.iso2 != null ){
                 $("#country_iso").html(allcountries_data[allcountries_data_index].countryInfo.iso2);
+                $(".other_iso").html(allcountries_data[allcountries_data_index].countryInfo.iso2);
             }
             else if( allcountries_data[allcountries_data_index].countryInfo.iso3 != null ){
                 $("#country_iso").html(allcountries_data[allcountries_data_index].countryInfo.iso3);
+                $(".other_iso").html(allcountries_data[allcountries_data_index].countryInfo.iso3);
             }
             else{
                 $("#country_iso").html(allcountries_data[allcountries_data_index].country);
+                $(".other_iso").html(allcountries_data[allcountries_data_index].country);
             }
 
             // Add load functions for charts here
