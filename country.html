@@ -370,7 +370,7 @@
     <!-- ChartJS -->
     <script src="plugins/chart.js/Chart.min.js"></script>
     <script>
-        var current_country_id = 608;
+        var current_country_id;
         var all_data;
         var allcountries_data;
         var allcountries_data_index;
@@ -385,6 +385,10 @@
         var country_historydata_deaths;
 
         $( document ).ready(function() {
+            if(!isNaN(findGetParameter("q"))){
+                current_country_id = findGetParameter("q");
+            }
+            
             if(current_country_id == null || current_country_id < 0 ){
                 alert("Unknown country. Will return you to the homepage after this message").
                 window.open("index", "_self");
@@ -579,6 +583,19 @@
             for(var x = country_historydata_cases.length - 1 ; x >= 0 ; x-- ){
                 $("#country_history").append("<tr><td>"+country_historydata_cases[x][0]+"</td><td>"+country_historydata_cases[x][1]+"</td><td>"+country_historydata_deaths[x][1]+"</td></tr>");
             }
+        }
+
+        function findGetParameter(parameterName) {
+            var result = null,
+                tmp = [];
+            location.search
+                .substr(1)
+                .split("&")
+                .forEach(function (item) {
+                tmp = item.split("=");
+                if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
+                });
+            return result;
         }
 
         // #region Deaths and Recovered over Time Chart
