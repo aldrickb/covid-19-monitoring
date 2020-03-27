@@ -22,8 +22,6 @@
         <link rel="stylesheet" href="dist/css/adminlte.min.css">
         <!-- JQVMap -->
         <link rel="stylesheet" href="plugins/jqvmap/jqvmap.min.css">
-        <!-- IonIcons -->
-        <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
         <style>
             /* #region page color theme */
             .content-wrapper{
@@ -65,7 +63,7 @@
             }
             /* #endregion */
         
-            .content-header .breadcrumb-item{
+            .content-header .breadcrumb-item, table th , table td{
                 color: #ffffff;
             }
         </style>
@@ -165,7 +163,7 @@
                             <div class="card">
                                 <div class="card-header border-0">
                                     <div class="d-flex justify-content-between">
-                                        <h3 class="card-title">Deaths over Recovered</h3>
+                                        <h3 class="card-title">Deaths and Recovered over Time</h3>
                                     </div>
                                 </div>
                                 <div class="card-body">
@@ -184,42 +182,42 @@
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <div class="card">
+                            <div class="card" style="height: 333px;">
                                 <div class="card-header border-0">
                                     <h3 class="card-title">Overview</h3>
                                 </div>
                                 <div class="card-body">
                                     <div class="d-flex justify-content-between align-items-center border-bottom mb-3">
-                                        <p class="text-success text-xl">
-                                            <i class="ion ion-ios-refresh-empty"></i>
+                                        <p class="text-warning text-xl">
+                                            <i class="fas fa-exclamation-triangle"></i>
                                         </p>
                                         <p class="d-flex flex-column text-right">
                                             <span class="font-weight-bold" style="color: #ffffff">
-                                                <i class="ion ion-android-arrow-up text-success"></i> 12%
+                                                <i class="fas fa-arrow-up text-warning"></i> 12%
                                             </span>
-                                            <span class="text-muted">VERSES AVERAGE OTHER COUNTRY CASES</span>
+                                            <span class="text-muted">verses other countries average cases</span>
                                         </p>
                                     </div>
                                     <div class="d-flex justify-content-between align-items-center border-bottom mb-3">
-                                        <p class="text-warning text-xl">
-                                            <i class="ion ion-ios-cart-outline"></i>
+                                        <p class="text-danger text-xl">
+                                            <i class="fas fa-cross"></i>
                                         </p>
                                         <p class="d-flex flex-column text-right">
                                             <span class="font-weight-bold" style="color: #ffffff">
-                                                <i class="ion ion-android-arrow-up text-warning"></i> 0.8%
+                                                <i class="fas fa-arrow-down text-danger"></i> 0.8%
                                             </span>
-                                            <span class="text-muted">VERSES AVERAGE OTHER COUNTRY DEATH</span>
+                                            <span class="text-muted">verses other countries average deaths</span>
                                         </p>
                                     </div>
                                     <div class="d-flex justify-content-between align-items-center mb-0">
-                                        <p class="text-danger text-xl">
-                                            <i class="ion ion-ios-people-outline"></i>
+                                        <p class="text-success text-xl">
+                                            <i class="far fa-heart"></i>
                                         </p>
                                         <p class="d-flex flex-column text-right">
                                             <span class="font-weight-bold" style="color: #ffffff">
-                                                <i class="ion ion-android-arrow-down text-danger"></i> 1%
+                                                <i class="fas fa-equals text-success"></i> 1%
                                             </span>
-                                            <span class="text-muted">VERSES AVERAGE OTHER COUNTRY RECOVERED</span>
+                                            <span class="text-muted">verses other countries average recoveries</span>
                                         </p>
                                     </div>
                                 </div>
@@ -227,43 +225,111 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-12 col-sm-6 col-md-3">
+                        <div class="col-12 col-sm-6 col-md-4">
                             <div class="info-box">
-                                <span class="info-box-icon bg-info elevation-1"><i class="fas fa-cog"></i></span>
+                                <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-exclamation-triangle"></i></span>
                                 <div class="info-box-content">
-                                    <span class="info-box-text">CPU Traffic</span>
-                                    <span class="info-box-number">
-                                        10
-                                        <small>%</small>
-                                    </span>
+                                    <span class="info-box-text">Cases</span>
+                                    <span class="info-box-number">10</span>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12 col-sm-6 col-md-3">
+                        <div class="col-12 col-sm-6 col-md-4">
                             <div class="info-box mb-3">
-                                <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-thumbs-up"></i></span>
+                                <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-cross"></i></span>
                                 <div class="info-box-content">
-                                    <span class="info-box-text">Likes</span>
+                                    <span class="info-box-text">Deaths</span>
                                     <span class="info-box-number">41,410</span>
                                 </div>
                             </div>
                         </div>
                         <div class="clearfix hidden-md-up"></div>
-                        <div class="col-12 col-sm-6 col-md-3">
+                        <div class="col-12 col-sm-6 col-md-4">
                             <div class="info-box mb-3">
-                                <span class="info-box-icon bg-success elevation-1"><i class="fas fa-shopping-cart"></i></span>
+                                <span class="info-box-icon bg-success elevation-1"><i class="far fa-heart"></i></span>
                                 <div class="info-box-content">
-                                    <span class="info-box-text">Sales</span>
+                                    <span class="info-box-text">Recovered</span>
                                     <span class="info-box-number">760</span>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12 col-sm-6 col-md-3">
-                            <div class="info-box mb-3">
-                                <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
-                                <div class="info-box-content">
-                                    <span class="info-box-text">New Members</span>
-                                    <span class="info-box-number">2,000</span>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card card-info">
+                                <div class="card-header">
+                                    <h3 class="card-title">Overall cases, deaths and recovered for PH</h3>
+                                </div>
+                                <div class="card-body">
+                                    <canvas id="pieChart1" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card card-warning">
+                                <div class="card-header">
+                                    <h3 class="card-title">Total number of PH COVID19 cases vs total global cases</h3>
+                                </div>
+                                <div class="card-body">
+                                    <canvas id="donutChart1" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card card-danger">
+                                <div class="card-header">
+                                    <h3 class="card-title">Total number of PH COVID deaths vs total global cases</h3>
+                                </div>
+                                <div class="card-body">
+                                    <canvas id="donutChart2" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card card-warning">
+                                <div class="card-header">
+                                    <h3 class="card-title">Total number of PH COVID19 recoveries vs total global cases</h3>
+                                </div>
+                                <div class="card-body">
+                                    <canvas id="donutChart3" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header border-transparent">
+                                    <h3 class="card-title">History</h3>
+                                    <div class="card-tools">
+                                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                            <i class="fas fa-minus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="card-body p-0">
+                                    <div class="table-responsive">
+                                        <table class="table m-0">
+                                            <thead>
+                                                <tr>
+                                                    <th>Date</th>
+                                                    <th>No. of Cases</th>
+                                                    <th>No. of Deaths</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -300,11 +366,11 @@
     <script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
     <!-- AdminLTE App -->
     <script src="dist/js/adminlte.js"></script>
-
     <!-- PAGE PLUGINS -->
     <!-- ChartJS -->
     <script src="plugins/chart.js/Chart.min.js"></script>
     <script>
+        // #region Deaths and Recovered over Time Chart
         var ticksStyle = {
             fontColor: '#495057',
             fontStyle: 'bold'
@@ -377,6 +443,111 @@
             }
             }
         });
+        // #endregion
+        
+        // #region Overall cases, deaths and recovered Chart
+        var pieChartCanvas1 = $('#pieChart1').get(0).getContext('2d');
+        var pieData1        = {
+            labels: [
+                'Active Cases', 
+                'Death',
+                'Recovered'
+            ],
+            datasets: [
+                {
+                data: [700,500,400],
+                backgroundColor : ['#ffc107', '#dc3545', '#28a745'],
+                }
+            ]
+        };
+        var pieOptions1     = {
+            maintainAspectRatio : false,
+            responsive : true,
+        };
+        var pieChart1 = new Chart(pieChartCanvas1, {
+            type: 'pie',
+            data: pieData1,
+            options: pieOptions1      
+        })
+        // #endregion
+
+        // #region Total number of cases Chart
+        var donutChartCanvas1 = $('#donutChart1').get(0).getContext('2d');
+        var donutData1        = {
+            labels: [
+                'Todays Cases', 
+                'Previous Cases',
+                'Cases from other countries', 
+            ],
+            datasets: [
+                {
+                data: [2,10,400],
+                backgroundColor : ['#331a00', '#ff8000', '#ffc107'],
+                }
+            ]
+        };
+        var donutOptions1     = {
+            maintainAspectRatio : false,
+            responsive : true,
+        };
+        var donutChart1 = new Chart(donutChartCanvas1, {
+            type: 'doughnut',
+            data: donutData1,
+            options: donutOptions1      
+        });
+        // #endregion
+
+        // #region Total number of deaths Chart
+        var donutChartCanvas2 = $('#donutChart2').get(0).getContext('2d');
+        var donutData2        = {
+            labels: [
+                'Todays death', 
+                'Previous deaths',
+                'Deaths from other countries'
+            ],
+            datasets: [
+                {
+                data: [10,60,1000],
+                backgroundColor : ['#331a00', '#ff8000', '#dc3545'],
+                }
+            ]
+        };
+        var donutOptions2     = {
+            maintainAspectRatio : false,
+            responsive : true,
+        };
+        var donutChart2 = new Chart(donutChartCanvas2, {
+            type: 'doughnut',
+            data: donutData2,
+            options: donutOptions2      
+        });
+        // #endregion
+
+        // #region Total number of recoveries Chart
+        var donutChartCanvas3 = $('#donutChart3').get(0).getContext('2d');
+        var donutData3        = {
+            labels: [
+                'Todays recoveries', 
+                'Previous recoveries',
+                'Recoveries from other countries'
+            ],
+            datasets: [
+                {
+                data: [10,60,1000],
+                backgroundColor : ['#339966', '#00ff99', '#28a745'],
+                }
+            ]
+        };
+        var donutOptions3     = {
+            maintainAspectRatio : false,
+            responsive : true,
+        };
+        var donutChart3 = new Chart(donutChartCanvas3, {
+            type: 'doughnut',
+            data: donutData3,
+            options: donutOptions3      
+        });
+        // #endregion
     </script>
     <!-- #endregion -->
 </body>
