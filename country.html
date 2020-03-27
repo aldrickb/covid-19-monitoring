@@ -143,13 +143,13 @@
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <img src="https://raw.githubusercontent.com/NovelCOVID/API/master/assets/flags/ph.png" class="nav-icon" style="margin-bottom:5px; height: 33px">
-                            <h1 class="m-0 text-light">Philippines</h1>
+                            <img id="country_flag" class="nav-icon" style="margin-bottom:5px; height: 33px; color: #ffffff;" alt="flag loading">
+                            <h1 id="country_name" class="m-0 text-light">Loading</h1>
                         </div><!-- /.col -->
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
                                 <li class="breadcrumb-item"><a>Country</a></li>
-                                <li class="breadcrumb-item">PH</li>
+                                <li id="country_iso" class="breadcrumb-item">Loading</li>
                             </ol>
                         </div><!-- /.col -->
                     </div><!-- /.row -->
@@ -484,7 +484,7 @@
                     country_historydata_cases = Object.entries(country_historydata.timeline.cases);
                     country_historydata_deaths = Object.entries(country_historydata.timeline.deaths);
 
-                    loadchart1();
+                    loadBasicInfo();
                 },
                 error: function(XMLHttpRequest, textStatus, errorThrown){
                     get_country_historydata();
@@ -492,6 +492,23 @@
             });
         }
         
+        function loadBasicInfo(){
+            $("#country_flag").attr("src", allcountries_data[allcountries_data_index].countryInfo.flag);
+            $("#country_name").html(allcountries_data[allcountries_data_index].country);
+            if( allcountries_data[allcountries_data_index].countryInfo.iso2 != null ){
+                $("#country_iso").html(allcountries_data[allcountries_data_index].countryInfo.iso2);
+            }
+            else if( allcountries_data[allcountries_data_index].countryInfo.iso3 != null ){
+                $("#country_iso").html(allcountries_data[allcountries_data_index].countryInfo.iso3);
+            }
+            else{
+                $("#country_iso").html(allcountries_data[allcountries_data_index].country);
+            }
+
+            // Add load functions for charts here
+            loadchart1();
+        }
+
         // #region Deaths and Recovered over Time Chart
         var ticksStyle = {
             fontColor: '#495057',
