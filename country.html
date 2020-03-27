@@ -390,8 +390,13 @@
             }
             
             if(current_country_id == null || current_country_id < 0 ){
-                alert("Unknown country. Will return you to the homepage after this message").
-                window.open("index", "_self");
+                $(document).Toasts('create', {
+                    class: 'bg-warning', 
+                    title: 'Unknown country',
+                    subtitle: 'Unknown country',
+                    body: 'Unknown country. Will return you to the homepage after this message.'
+                });
+                window.setTimeout(returnhome, 3000);
             }
             else{
                 window.setTimeout(get_all_data, 3000);
@@ -465,8 +470,13 @@
                     }
 
                     if(allcountries_data_index == null){
-                        alert("Unsupported country. Will return you to the homepage after this message").
-                        window.open("index", "_self");
+                        $(document).Toasts('create', {
+                            class: 'bg-warning', 
+                            title: 'Unsupported country',
+                            subtitle: 'Unsupported country',
+                            body: 'Unsupported country. Will return you to the homepage after this message'
+                        });
+                        window.setTimeout(returnhome, 3000);
                     }
                     else{
                         get_country_historydata(allcountries_data[allcountries_data_index].country);
@@ -596,6 +606,10 @@
                 if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
                 });
             return result;
+        }
+
+        function returnhome(){
+            window.open("index", "_self");
         }
 
         // #region Deaths and Recovered over Time Chart
