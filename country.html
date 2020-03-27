@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- #region meta -->
+        <title>COVID-19 Monitoring WebApp</title>
+        <link rel="shortcut icon" type="image/x-icon" href="assets/img/logo.png" />
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="description" content="A online web app monitoring tool for the numbers of cases related to COVID-19.">
+        <meta property="og:title" content="COVID-19 Monitoring WebApp" />
+        <meta property="og:description" content="A online web app monitoring tool for the numbers of cases related to COVID-19." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://aldrickb.com/covid-19-monitoring/" />
+        <meta property="og:image" content="https://aldrickb.com/covid-19-monitoring/assets/img/homepage1.png" />
+    <!-- #endregion -->
+
+    <!-- #region style -->
+        <!-- overlayScrollbars -->
+        <link rel="stylesheet" href="plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+        <!-- Theme style -->
+        <link rel="stylesheet" href="dist/css/adminlte.min.css">
+        <!-- JQVMap -->
+        <link rel="stylesheet" href="plugins/jqvmap/jqvmap.min.css">
+        <style>
+            /* #region page color theme */
+            .content-wrapper{
+                background-color: #121212;
+            }
+
+            .main-header{
+                background-color: #262626;
+                border-bottom-color: #262626;
+            }
+
+            .main-footer{
+                background-color: #262626;
+                border-top-color: #262626;
+            }
+
+            .main-sidebar{
+                background-color: #404040;
+            }
+
+            .brand-link{
+                background-color: #404040 !important;
+            }
+
+            .active{
+                background-color: #4d4d4d !important;
+            }
+
+            .main-header .nav-link{
+                color: #ffffff !important;
+            }
+
+            .card, .info-box{
+                background-color: #262626;
+            }
+
+            .card-title, .info-box-text, .info-box-number{
+                color: #ffffff;
+            }
+            /* #endregion */
+        
+            .content-header .breadcrumb-item, table th , table td{
+                color: #ffffff;
+            }
+        </style>
+    <!-- #endregion -->
+
+    <!-- #region fonts-->
+        <!-- Font Awesome Icons -->
+        <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+        <!-- Google Font: Source Sans Pro -->
+        <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <!-- #endregion -->
+</head>
+<body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
+    <!-- #region wrapper-->
+    <div class="wrapper">
+        <!-- #region navigation bar -->
+        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
+                </li>
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a class="nav-link">Browse Country</a>
+                </li>
+            </ul>
+
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a href="https://github.com/NovelCOVID/api" class="nav-link">Powered by: NovelCOVID/API</a>
+                </li>
+            </ul>
+        </nav>
+        <!-- #endregion -->
+
+        <!-- #region main sidebar -->
+        <aside class="main-sidebar sidebar-dark-primary elevation-4">
+            <a class="brand-link" style="color: #ffffff; border-bottom: 1px solid #ffffff;">
+                <img src="assets/img/logo.png" class="brand-image img-circle elevation-3" style="opacity: .8">
+                <span class="brand-text font-weight-light">COVID-19</span>
+            </a>
+            <div class="sidebar">
+                <div class="user-panel mt-3 pb-3 mb-3 d-flex" style="border-bottom: 1px solid #ffffff;">
+                    <div class="input-group input-group-sm">
+                        <input class="form-control form-control-navbar" type="search" placeholder="Search Country (Coming Soon)" aria-label="Search Country (Coming Soon)">
+                        <div class="input-group-append" style="background-color: #fff; background-clip: padding-box; border: 1px solid #ced4da; box-shadow: inset 0 0 0 transparent; height: calc(1.8125rem + 2px);">
+                            <button class="btn btn-navbar" type="submit">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <nav class="mt-2">
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                        <li class="nav-item">
+                            <a href="index.html" class="nav-link active" style="color: #ffffff;">
+                                <i class="nav-icon fas fa-globe"></i>
+                                <p>World Map</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" style="color: #ffffff;">
+                                <img src="https://raw.githubusercontent.com/NovelCOVID/API/master/assets/flags/ph.png" class="nav-icon" style="margin-bottom:5px;">
+                                <p>Philippines (Coming Soon)</p>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+                <!-- /.sidebar-menu -->
+            </div>
+            <!-- /.sidebar -->
+        </aside>
+        <!-- #endregion -->
+
+        <!-- #region content -->
+        <div class="content-wrapper">
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <img id="country_flag" class="nav-icon" style="margin-bottom:5px; height: 33px; color: #ffffff;" alt="flag loading">
+                            <h1 id="country_name" class="m-0 text-light">Loading</h1>
+                        </div><!-- /.col -->
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item"><a>Country</a></li>
+                                <li id="country_iso" class="breadcrumb-item">Loading</li>
+                            </ol>
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>
+            <section class="content">
+                <div class="container-fluid">
+                    <br>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header border-0">
+                                    <div class="d-flex justify-content-between">
+                                        <h3 class="card-title">Cases and Deaths over Time</h3>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="position-relative mb-4">
+                                        <canvas id="visitors-chart" height="200"></canvas>
+                                    </div>
+                                    <div class="d-flex flex-row justify-content-end">
+                                        <span class="mr-2" style="color: #ffffff;">
+                                            <i class="fas fa-square" style="color: #ffc107;"></i>  Cases
+                                        </span>
+                                        <span style="color: #ffffff;">
+                                            <i class="fas fa-square" style="color: #e60000;"></i>  Deaths
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card" style="height: 333px;">
+                                <div class="card-header border-0">
+                                    <h3 class="card-title">Overview</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-center border-bottom mb-3">
+                                        <p class="text-warning text-xl">
+                                            <i class="fas fa-exclamation-triangle"></i>
+                                        </p>
+                                        <p class="d-flex flex-column text-right">
+                                            <span class="font-weight-bold" style="color: #ffffff">
+                                                <i class="fas fa-arrow-up text-warning"></i> 12%
+                                            </span>
+                                            <span class="text-muted">verses other countries average cases</span>
+                                        </p>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center border-bottom mb-3">
+                                        <p class="text-danger text-xl">
+                                            <i class="fas fa-cross"></i>
+                                        </p>
+                                        <p class="d-flex flex-column text-right">
+                                            <span class="font-weight-bold" style="color: #ffffff">
+                                                <i class="fas fa-arrow-down text-danger"></i> 0.8%
+                                            </span>
+                                            <span class="text-muted">verses other countries average deaths</span>
+                                        </p>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center mb-0">
+                                        <p class="text-success text-xl">
+                                            <i class="far fa-heart"></i>
+                                        </p>
+                                        <p class="d-flex flex-column text-right">
+                                            <span class="font-weight-bold" style="color: #ffffff">
+                                                <i class="fas fa-equals text-success"></i> 1%
+                                            </span>
+                                            <span class="text-muted">verses other countries average recoveries</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-sm-6 col-md-4">
+                            <div class="info-box">
+                                <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-exclamation-triangle"></i></span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Cases</span>
+                                    <span class="info-box-number">10</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-4">
+                            <div class="info-box mb-3">
+                                <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-cross"></i></span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Deaths</span>
+                                    <span class="info-box-number">41,410</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix hidden-md-up"></div>
+                        <div class="col-12 col-sm-6 col-md-4">
+                            <div class="info-box mb-3">
+                                <span class="info-box-icon bg-success elevation-1"><i class="far fa-heart"></i></span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Recovered</span>
+                                    <span class="info-box-number">760</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card card-info">
+                                <div class="card-header">
+                                    <h3 class="card-title">Overall cases, deaths and recovered for PH</h3>
+                                </div>
+                                <div class="card-body">
+                                    <canvas id="pieChart1" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card card-warning">
+                                <div class="card-header">
+                                    <h3 class="card-title">Total number of PH COVID19 cases vs total global cases</h3>
+                                </div>
+                                <div class="card-body">
+                                    <canvas id="donutChart1" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card card-danger">
+                                <div class="card-header">
+                                    <h3 class="card-title">Total number of PH COVID deaths vs total global cases</h3>
+                                </div>
+                                <div class="card-body">
+                                    <canvas id="donutChart2" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card card-warning">
+                                <div class="card-header">
+                                    <h3 class="card-title">Total number of PH COVID19 recoveries vs total global cases</h3>
+                                </div>
+                                <div class="card-body">
+                                    <canvas id="donutChart3" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header border-transparent">
+                                    <h3 class="card-title">History</h3>
+                                    <div class="card-tools">
+                                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                            <i class="fas fa-minus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="card-body p-0">
+                                    <div class="table-responsive">
+                                        <table class="table m-0">
+                                            <thead>
+                                                <tr>
+                                                    <th>Date</th>
+                                                    <th>No. of Cases</th>
+                                                    <th>No. of Deaths</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <!-- #endregion -->
+
+        <!-- #region control sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Control sidebar content goes here -->
+        </aside>
+        <!-- #endregion -->
+
+        <!-- #region Footer -->
+        <footer class="main-footer">
+            <strong>Copyright &copy; 2014-2019 <a href="http://adminlte.io">AdminLTE.io</a>.</strong>
+            All rights reserved.
+            <div class="float-right d-none d-sm-inline-block">
+            <b>Version</b> 3.0.2
+            </div>
+        </footer>
+        <!-- #endregion -->
+    </div>
+    <!-- #endregion -->
+
+    <!-- #region javascript -->
+    <!-- jQuery -->
+    <script src="plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- overlayScrollbars -->
+    <script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="dist/js/adminlte.js"></script>
+    <!-- PAGE PLUGINS -->
+    <!-- ChartJS -->
+    <script src="plugins/chart.js/Chart.min.js"></script>
+    <script>
+        var current_country_id = 608;
+        var all_data;
+        var allcountries_data;
+        var allcountries_data_index;
+        var allcountries_data_cases_low;
+        var allcountries_data_cases_high;
+        var allcountries_data_deaths_low;
+        var allcountries_data_deaths_high;
+        var allcountries_data_recovered_low;
+        var allcountries_data_recovered_high;
+        var country_historydata;
+        var country_historydata_cases; 
+        var country_historydata_deaths;
+
+        $( document ).ready(function() {
+            if(current_country_id == null || current_country_id < 0 ){
+                alert("Unknown country. Will return you to the homepage after this message").
+                window.open("index", "_self");
+            }
+            else{
+                window.setTimeout(get_all_data, 3000);
+            }
+        });
+
+        function get_all_data(){
+            $.ajax({
+                url: "https://corona.lmao.ninja/all", 
+                dataType: 'json',
+                success: function(data){
+                    all_data =  data;
+                    get_allcountries_data();
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown){
+                    get_all_data();
+                }
+            });
+        }
+
+        function get_allcountries_data(){
+            $.ajax({
+                url: "https://corona.lmao.ninja/countries", 
+                dataType: 'json',
+                success: function(data){
+                    allcountries_data =  data;
+                    
+                    for(var x = 0 ; x < allcountries_data.length ; x++){
+                        if(allcountries_data[x].countryInfo._id == current_country_id){
+                            allcountries_data_index = x;
+                        }
+
+                        if(allcountries_data_cases_low == null){
+                            allcountries_data_cases_low = allcountries_data[x].cases;
+                        }
+                        else if(allcountries_data_cases_low > allcountries_data[x].cases){
+                            allcountries_data_cases_low = allcountries_data[x].cases;
+                        }
+                        if(allcountries_data_cases_high == null){
+                            allcountries_data_cases_high = allcountries_data[x].cases;
+                        }
+                        else if(allcountries_data_cases_high < allcountries_data[x].cases){
+                            allcountries_data_cases_high = allcountries_data[x].cases;
+                        }
+
+                        if(allcountries_data_deaths_low == null){
+                            allcountries_data_deaths_low = allcountries_data[x].deaths;
+                        }
+                        else if(allcountries_data_deaths_low > allcountries_data[x].deaths){
+                            allcountries_data_deaths_low = allcountries_data[x].deaths;
+                        }
+                        if(allcountries_data_deaths_high == null){
+                            allcountries_data_deaths_high = allcountries_data[x].deaths;
+                        }
+                        else if(allcountries_data_deaths_high < allcountries_data[x].deaths){
+                            allcountries_data_deaths_high = allcountries_data[x].deaths;
+                        }
+
+                        if(allcountries_data_recovered_low == null){
+                            allcountries_data_recovered_low = allcountries_data[x].recovered;
+                        }
+                        else if(allcountries_data_recovered_low > allcountries_data[x].recovered){
+                            allcountries_data_recovered_low = allcountries_data[x].recovered;
+                        }
+                        if(allcountries_data_recovered_high == null){
+                            allcountries_data_recovered_high = allcountries_data[x].recovered;
+                        }
+                        else if(allcountries_data_recovered_high < allcountries_data[x].recovered){
+                            allcountries_data_recovered_high = allcountries_data[x].recovered;
+                        }
+                    }
+
+                    if(allcountries_data_index == null){
+                        alert("Unsupported country. Will return you to the homepage after this message").
+                        window.open("index", "_self");
+                    }
+                    else{
+                        get_country_historydata(allcountries_data[allcountries_data_index].country);
+                    }
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown){
+                    get_allcountries_data();
+                }
+            });
+        }
+
+        function get_country_historydata(country_name){
+            alert(country_name);
+            $.ajax({
+                url: "https://corona.lmao.ninja/v2/historical/" + country_name.toLowerCase(), 
+                dataType: 'json',
+                success: function(data){
+                    country_historydata =  data;
+                    country_historydata_cases = Object.entries(country_historydata.timeline.cases);
+                    country_historydata_deaths = Object.entries(country_historydata.timeline.deaths);
+
+                    loadBasicInfo();
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown){
+                    get_country_historydata();
+                }
+            });
+        }
+        
+        function loadBasicInfo(){
+            $("#country_flag").attr("src", allcountries_data[allcountries_data_index].countryInfo.flag);
+            $("#country_name").html(allcountries_data[allcountries_data_index].country);
+            if( allcountries_data[allcountries_data_index].countryInfo.iso2 != null ){
+                $("#country_iso").html(allcountries_data[allcountries_data_index].countryInfo.iso2);
+            }
+            else if( allcountries_data[allcountries_data_index].countryInfo.iso3 != null ){
+                $("#country_iso").html(allcountries_data[allcountries_data_index].countryInfo.iso3);
+            }
+            else{
+                $("#country_iso").html(allcountries_data[allcountries_data_index].country);
+            }
+
+            // Add load functions for charts here
+            loadchart1();
+        }
+
+        // #region Deaths and Recovered over Time Chart
+        var ticksStyle = {
+            fontColor: '#495057',
+            fontStyle: 'bold'
+        };
+
+        var mode      = 'index';
+        var intersect = true;
+
+        var $visitorsChart = $('#visitors-chart');
+        var visitorsChart;
+        function loadchart1(){
+            var chartlength = 10;
+            var data_label = new Array();
+            var data_linedata1 = new Array();
+            var data_linedata2 = new Array();
+
+            var tempx = 0;
+            for( var x = country_historydata_cases.length - 1 ; x > country_historydata_cases.length - chartlength ; x-- ){
+                data_label[tempx] = country_historydata_cases[x][0];
+                data_linedata1[tempx] = country_historydata_cases[x][1];
+                data_linedata2[tempx++] = country_historydata_deaths[x][1];
+            }
+
+
+            visitorsChart  = new Chart($visitorsChart, {
+                data   : {
+                labels  : data_label.reverse(),
+                datasets: [{
+                    type                : 'line',
+                    data                : data_linedata1.reverse(),
+                    backgroundColor     : 'transparent',
+                    borderColor         : '#ffc107',
+                    pointBorderColor    : '#ffc107',
+                    pointBackgroundColor: '#ffc107',
+                    fill                : false
+                    // pointHoverBackgroundColor: '#007bff',
+                    // pointHoverBorderColor    : '#007bff'
+                },
+                    {
+                    type                : 'line',
+                    data                : data_linedata2.reverse(),
+                    backgroundColor     : 'transparent',
+                    borderColor         : '#e60000',
+                    pointBorderColor    : '#e60000',
+                    pointBackgroundColor: '#e60000',
+                    fill                : false
+                    // pointHoverBackgroundColor: '#ced4da',
+                    // pointHoverBorderColor    : '#ced4da'
+                    }]
+                },
+                options: {
+                maintainAspectRatio: false,
+                tooltips           : {
+                    mode     : mode,
+                    intersect: intersect
+                },
+                hover              : {
+                    mode     : mode,
+                    intersect: intersect
+                },
+                legend             : {
+                    display: false
+                },
+                scales             : {
+                    yAxes: [{
+                    // display: false,
+                    gridLines: {
+                        display      : true,
+                        lineWidth    : '4px',
+                        color        : 'rgba(0, 0, 0, .2)',
+                        zeroLineColor: 'transparent'
+                    },
+                    ticks    : $.extend({
+                        beginAtZero : true,
+                        suggestedMax: 200
+                    }, ticksStyle)
+                    }],
+                    xAxes: [{
+                    display  : true,
+                    gridLines: {
+                        display: false
+                    },
+                    ticks    : ticksStyle
+                    }]
+                }
+                }
+            });
+        }
+        // #endregion
+        
+        // #region Overall cases, deaths and recovered Chart
+        var pieChartCanvas1 = $('#pieChart1').get(0).getContext('2d');
+        var pieData1        = {
+            labels: [
+                'Active Cases', 
+                'Death',
+                'Recovered'
+            ],
+            datasets: [
+                {
+                data: [700,500,400],
+                backgroundColor : ['#ffc107', '#dc3545', '#28a745'],
+                }
+            ]
+        };
+        var pieOptions1     = {
+            maintainAspectRatio : false,
+            responsive : true,
+        };
+        var pieChart1 = new Chart(pieChartCanvas1, {
+            type: 'pie',
+            data: pieData1,
+            options: pieOptions1      
+        })
+        // #endregion
+
+        // #region Total number of cases Chart
+        var donutChartCanvas1 = $('#donutChart1').get(0).getContext('2d');
+        var donutData1        = {
+            labels: [
+                'Todays Cases', 
+                'Previous Cases',
+                'Cases from other countries', 
+            ],
+            datasets: [
+                {
+                data: [2,10,400],
+                backgroundColor : ['#331a00', '#ff8000', '#ffc107'],
+                }
+            ]
+        };
+        var donutOptions1     = {
+            maintainAspectRatio : false,
+            responsive : true,
+        };
+        var donutChart1 = new Chart(donutChartCanvas1, {
+            type: 'doughnut',
+            data: donutData1,
+            options: donutOptions1      
+        });
+        // #endregion
+
+        // #region Total number of deaths Chart
+        var donutChartCanvas2 = $('#donutChart2').get(0).getContext('2d');
+        var donutData2        = {
+            labels: [
+                'Todays death', 
+                'Previous deaths',
+                'Deaths from other countries'
+            ],
+            datasets: [
+                {
+                data: [10,60,1000],
+                backgroundColor : ['#331a00', '#ff8000', '#dc3545'],
+                }
+            ]
+        };
+        var donutOptions2     = {
+            maintainAspectRatio : false,
+            responsive : true,
+        };
+        var donutChart2 = new Chart(donutChartCanvas2, {
+            type: 'doughnut',
+            data: donutData2,
+            options: donutOptions2      
+        });
+        // #endregion
+
+        // #region Total number of recoveries Chart
+        var donutChartCanvas3 = $('#donutChart3').get(0).getContext('2d');
+        var donutData3        = {
+            labels: [
+                'Todays recoveries', 
+                'Previous recoveries',
+                'Recoveries from other countries'
+            ],
+            datasets: [
+                {
+                data: [10,60,1000],
+                backgroundColor : ['#339966', '#00ff99', '#28a745'],
+                }
+            ]
+        };
+        var donutOptions3     = {
+            maintainAspectRatio : false,
+            responsive : true,
+        };
+        var donutChart3 = new Chart(donutChartCanvas3, {
+            type: 'doughnut',
+            data: donutData3,
+            options: donutOptions3      
+        });
+        // #endregion
+    </script>
+    <!-- #endregion -->
+</body>
+</html>
