@@ -325,8 +325,7 @@
         );
 
         $( document ).ready(function() {
-            getData1();
-            getData2();
+            window.setTimeout(getData1, 3000);
         });
 
         function getData1(){
@@ -336,6 +335,8 @@
                 success: function(data){
                     countries_data =  data;
                     loadMap();
+                    load_country_list();
+                    getData2();
                 },
                 error: function(XMLHttpRequest, textStatus, errorThrown){
                     getData();
@@ -448,7 +449,6 @@
                 success: function(data){
                     all_data =  data;
                     loadSideCards();
-                    load_country_list();
                 },
                 error: function(XMLHttpRequest, textStatus, errorThrown){
                     getData2();
