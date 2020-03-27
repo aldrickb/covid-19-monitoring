@@ -725,28 +725,32 @@
 
         // #region Total number of deaths Chart
         var donutChartCanvas2 = $('#donutChart2').get(0).getContext('2d');
-        var donutData2        = {
-            labels: [
-                'Todays death', 
-                'Previous deaths',
-                'Deaths from other countries'
-            ],
-            datasets: [
-                {
-                data: [10,60,1000],
-                backgroundColor : ['#331a00', '#ff8000', '#dc3545'],
-                }
-            ]
-        };
         var donutOptions2     = {
             maintainAspectRatio : false,
             responsive : true,
         };
-        var donutChart2 = new Chart(donutChartCanvas2, {
-            type: 'doughnut',
-            data: donutData2,
-            options: donutOptions2      
-        });
+
+        function loadchart6(){
+            var donutData2 = {
+                labels: [
+                    'Todays death', 
+                    'Previous deaths',
+                    'Deaths from other countries'
+                ],
+                datasets: [
+                    {
+                    data: [allcountries_data[allcountries_data_index].todayDeaths, allcountries_data[allcountries_data_index].deaths - allcountries_data[allcountries_data_index].todayDeaths, all_data.deaths - allcountries_data[allcountries_data_index].deaths],
+                    backgroundColor : ['#331a00', '#ff8000', '#dc3545'],
+                    }
+                ]
+            };
+
+            var donutChart2 = new Chart(donutChartCanvas2, {
+                type: 'doughnut',
+                data: donutData2,
+                options: donutOptions2      
+            });
+        }
         // #endregion
 
         // #region Total number of recoveries Chart
