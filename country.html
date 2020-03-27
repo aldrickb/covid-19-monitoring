@@ -66,6 +66,18 @@
             .content-header .breadcrumb-item, table th , table td{
                 color: #ffffff;
             }
+
+            .sidenav-link{
+                max-width: 250px;
+            }
+
+            .sidenav-link:hover{
+                background-color: #4d4d4d !important;
+            }
+
+            .code-hide{
+                display: none;
+            }
         </style>
     <!-- #endregion -->
 
@@ -107,9 +119,9 @@
             <div class="sidebar">
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex" style="border-bottom: 1px solid #ffffff;">
                     <div class="input-group input-group-sm">
-                        <input class="form-control form-control-navbar" type="search" placeholder="Search Country (Coming Soon)" aria-label="Search Country (Coming Soon)">
+                        <input id="search_country" class="form-control form-control-navbar" type="search" placeholder="Search Country" aria-label="Search Country">
                         <div class="input-group-append" style="background-color: #fff; background-clip: padding-box; border: 1px solid #ced4da; box-shadow: inset 0 0 0 transparent; height: calc(1.8125rem + 2px);">
-                            <button class="btn btn-navbar" type="submit">
+                            <button onclick="search()" class="btn btn-navbar" >
                                 <i class="fas fa-search"></i>
                             </button>
                         </div>
@@ -123,12 +135,9 @@
                                 <p>World Map</p>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" style="color: #ffffff;">
-                                <img src="https://raw.githubusercontent.com/NovelCOVID/API/master/assets/flags/ph.png" class="nav-icon" style="margin-bottom:5px;">
-                                <p>Philippines (Coming Soon)</p>
-                            </a>
-                        </li>
+                        <span id="country_list">
+
+                        </span>
                     </ul>
                 </nav>
                 <!-- /.sidebar-menu -->
@@ -179,6 +188,9 @@
                                         </span>
                                     </div>
                                 </div>
+                                <div id="card1_overlay" class="overlay">
+                                    <i class="fas fa-2x fa-sync-alt fa-spin"></i>
+                                </div>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -193,7 +205,7 @@
                                         </p>
                                         <p class="d-flex flex-column text-right">
                                             <span class="font-weight-bold" style="color: #ffffff">
-                                                <i class="fas fa-arrow-up text-warning"></i> 12%
+                                                <i id="chart2_value1" class=""></i>
                                             </span>
                                             <span class="text-muted">verses other countries average cases</span>
                                         </p>
@@ -204,7 +216,7 @@
                                         </p>
                                         <p class="d-flex flex-column text-right">
                                             <span class="font-weight-bold" style="color: #ffffff">
-                                                <i class="fas fa-arrow-down text-danger"></i> 0.8%
+                                                <i id="chart2_value2" class=""></i>
                                             </span>
                                             <span class="text-muted">verses other countries average deaths</span>
                                         </p>
@@ -215,11 +227,14 @@
                                         </p>
                                         <p class="d-flex flex-column text-right">
                                             <span class="font-weight-bold" style="color: #ffffff">
-                                                <i class="fas fa-equals text-success"></i> 1%
+                                                <i id="chart2_value3" class=""></i>
                                             </span>
                                             <span class="text-muted">verses other countries average recoveries</span>
                                         </p>
                                     </div>
+                                </div>
+                                <div id="card2_overlay" class="overlay">
+                                    <i class="fas fa-2x fa-sync-alt fa-spin"></i>
                                 </div>
                             </div>
                         </div>
@@ -230,7 +245,10 @@
                                 <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-exclamation-triangle"></i></span>
                                 <div class="info-box-content">
                                     <span class="info-box-text">Cases</span>
-                                    <span class="info-box-number">10</span>
+                                    <span id="country_cases" class="info-box-number">0</span>
+                                </div>
+                                <div id="card3_overlay" class="overlay">
+                                    <i class="fas fa-2x fa-sync-alt fa-spin"></i>
                                 </div>
                             </div>
                         </div>
@@ -239,7 +257,10 @@
                                 <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-cross"></i></span>
                                 <div class="info-box-content">
                                     <span class="info-box-text">Deaths</span>
-                                    <span class="info-box-number">41,410</span>
+                                    <span id="country_deaths" class="info-box-number">0</span>
+                                </div>
+                                <div id="card4_overlay" class="overlay">
+                                    <i class="fas fa-2x fa-sync-alt fa-spin"></i>
                                 </div>
                             </div>
                         </div>
@@ -249,7 +270,10 @@
                                 <span class="info-box-icon bg-success elevation-1"><i class="far fa-heart"></i></span>
                                 <div class="info-box-content">
                                     <span class="info-box-text">Recovered</span>
-                                    <span class="info-box-number">760</span>
+                                    <span id="country_recovered" class="info-box-number">0</span>
+                                </div>
+                                <div id="card5_overlay" class="overlay">
+                                    <i class="fas fa-2x fa-sync-alt fa-spin"></i>
                                 </div>
                             </div>
                         </div>
@@ -263,6 +287,9 @@
                                 <div class="card-body">
                                     <canvas id="pieChart1" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
                                 </div>
+                                <div id="card6_overlay" class="overlay">
+                                    <i class="fas fa-2x fa-sync-alt fa-spin"></i>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -275,6 +302,9 @@
                                 <div class="card-body">
                                     <canvas id="donutChart1" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
                                 </div>
+                                <div id="card7_overlay" class="overlay">
+                                    <i class="fas fa-2x fa-sync-alt fa-spin"></i>
+                                </div>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -284,6 +314,9 @@
                                 </div>
                                 <div class="card-body">
                                     <canvas id="donutChart2" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                                </div>
+                                <div id="card8_overlay" class="overlay">
+                                    <i class="fas fa-2x fa-sync-alt fa-spin"></i>
                                 </div>
                             </div>
                         </div>
@@ -296,6 +329,9 @@
                                 </div>
                                 <div class="card-body">
                                     <canvas id="donutChart3" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                                </div>
+                                <div id="card9_overlay" class="overlay">
+                                    <i class="fas fa-2x fa-sync-alt fa-spin"></i>
                                 </div>
                             </div>
                         </div>
@@ -321,7 +357,7 @@
                                                     <th>No. of Deaths</th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
+                                            <tbody id="country_history">
                                                 <tr>
                                                     <td></td>
                                                     <td></td>
@@ -330,6 +366,9 @@
                                             </tbody>
                                         </table>
                                     </div>
+                                </div>
+                                <div id="card10_overlay" class="overlay">
+                                    <i class="fas fa-2x fa-sync-alt fa-spin"></i>
                                 </div>
                             </div>
                         </div>
@@ -370,7 +409,7 @@
     <!-- ChartJS -->
     <script src="plugins/chart.js/Chart.min.js"></script>
     <script>
-        var current_country_id = 608;
+        var current_country_id;
         var all_data;
         var allcountries_data;
         var allcountries_data_index;
@@ -385,9 +424,18 @@
         var country_historydata_deaths;
 
         $( document ).ready(function() {
+            if(!isNaN(findGetParameter("q"))){
+                current_country_id = findGetParameter("q");
+            }
+            
             if(current_country_id == null || current_country_id < 0 ){
-                alert("Unknown country. Will return you to the homepage after this message").
-                window.open("index", "_self");
+                $(document).Toasts('create', {
+                    class: 'bg-warning', 
+                    title: 'Unknown country',
+                    subtitle: 'Unknown country',
+                    body: 'Unknown country. Will return you to the homepage after this message.'
+                });
+                window.setTimeout(returnhome, 3000);
             }
             else{
                 window.setTimeout(get_all_data, 3000);
@@ -461,8 +509,13 @@
                     }
 
                     if(allcountries_data_index == null){
-                        alert("Unsupported country. Will return you to the homepage after this message").
-                        window.open("index", "_self");
+                        $(document).Toasts('create', {
+                            class: 'bg-warning', 
+                            title: 'Unsupported country',
+                            subtitle: 'Unsupported country',
+                            body: 'Unsupported country. Will return you to the homepage after this message'
+                        });
+                        window.setTimeout(returnhome, 3000);
                     }
                     else{
                         get_country_historydata(allcountries_data[allcountries_data_index].country);
@@ -475,7 +528,6 @@
         }
 
         function get_country_historydata(country_name){
-            alert(country_name);
             $.ajax({
                 url: "https://corona.lmao.ninja/v2/historical/" + country_name.toLowerCase(), 
                 dataType: 'json',
@@ -507,6 +559,131 @@
 
             // Add load functions for charts here
             loadchart1();
+            loadchart2();
+            loadchart3();
+            loadchart4();
+            loadchart5();
+            loadchart6();
+            loadchart7();
+            loadhistory();
+            load_country_list();
+        }
+
+        function loadchart2(){
+            // text-warning, text-danger, text-success
+            // fas fa-arrow-up , fas fa-arrow-down, fas fa-equals
+            // chart2_value3
+
+            var value1 = ( allcountries_data[allcountries_data_index].cases / ( all_data.cases / allcountries_data.length ) ) * 100;
+            var value2 = ( allcountries_data[allcountries_data_index].deaths / ( all_data.deaths / allcountries_data.length ) ) * 100;
+            var value3 = ( allcountries_data[allcountries_data_index].recovered / ( all_data.recovered / allcountries_data.length ) ) * 100;
+
+            if( value1 > 100 ){
+                value1 = (value1 - 100).toFixed(2);
+                $("#chart2_value1").addClass("fas fa-arrow-up text-danger");
+            }
+            else if( value1 < 100 ){
+                value1 = (100 - value1).toFixed(2);
+                $("#chart2_value1").addClass("fas fa-arrow-down text-success");
+            }
+            else if( value1 == 100 ){
+                value1 = 0;
+                $("#chart2_value1").addClass("fas fa-equals text-warning");
+            }
+
+            if( value2 > 100 ){
+                value2 = (value2 - 100).toFixed(2);
+                $("#chart2_value2").addClass("fas fa-arrow-up text-danger");
+            }
+            else if( value2 < 100 ){
+                value2 = (100 - value2).toFixed(2);
+                $("#chart2_value2").addClass("fas fa-arrow-down text-success");
+            }
+            else if( value2 == 100 ){
+                value2 = 0;
+                $("#chart2_value2").addClass("fas fa-equals text-warning");
+            }
+
+            if( value3 > 100 ){
+                value3 = (value3 - 100).toFixed(2);
+                $("#chart2_value3").addClass("fas fa-arrow-down text-success");
+            }
+            else if( value3 < 100 ){
+                value3 = (100 - value3).toFixed(2);
+                $("#chart2_value3").addClass("fas fa-arrow-down text-danger");
+            }
+            else if( value1 == 100 ){
+                value3 = 0;
+                $("#chart2_value3").addClass("fas fa-equals text-warning");
+            }
+
+            $("#chart2_value1").parent().html($("#chart2_value1").parent().html() + value1 + "%");
+            $("#chart2_value2").parent().html($("#chart2_value2").parent().html() + value2 + "%");
+            $("#chart2_value3").parent().html($("#chart2_value3").parent().html() + value3 + "%");
+
+            $("#card2_overlay").remove();
+        }
+
+        function loadchart3(){
+            $("#country_cases").html(allcountries_data[allcountries_data_index].cases);
+            $("#country_deaths").html(allcountries_data[allcountries_data_index].deaths);
+            $("#country_recovered").html(allcountries_data[allcountries_data_index].recovered);
+
+            $("#card3_overlay").remove();
+            $("#card4_overlay").remove();
+            $("#card5_overlay").remove();
+        }
+
+        function loadhistory(){
+            for(var x = country_historydata_cases.length - 1 ; x >= 0 ; x-- ){
+                $("#country_history").append("<tr><td>"+country_historydata_cases[x][0]+"</td><td>"+country_historydata_cases[x][1]+"</td><td>"+country_historydata_deaths[x][1]+"</td></tr>");
+            }
+
+            $("#card10_overlay").remove();
+        }
+
+        function findGetParameter(parameterName) {
+            var result = null,
+                tmp = [];
+            location.search
+                .substr(1)
+                .split("&")
+                .forEach(function (item) {
+                tmp = item.split("=");
+                if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
+                });
+            return result;
+        }
+
+        function returnhome(){
+            window.open("index", "_self");
+        }
+
+        function load_country_list(){
+            var countrylist = new Array();
+
+            for( var x = 0 ; x < allcountries_data.length ; x++ ){
+                countrylist[x] = [allcountries_data[x].country, allcountries_data[x].countryInfo.flag, allcountries_data[x].countryInfo._id];
+            }
+
+            for( var x = 0 ; x < allcountries_data.length ; x++ ){
+                for( var y = 0 ; y < allcountries_data.length - 1 ; y++ ){
+                    if( countrylist[y][0].localeCompare(countrylist[y+1][0]) >= 1 ){
+                        var tempvar = countrylist[y];
+                        countrylist[y] = countrylist[y+1];
+                        countrylist[y+1] = tempvar;
+                    }
+                }
+            }
+
+            for( var x = 0 ; x < allcountries_data.length ; x++ ){
+                $("#country_list").append('<li class="nav-item sidenav-link searchcode '+countrylist[x][0].toLowerCase()+'"><a href="country?q='+countrylist[x][2]+'"" class="nav-link" style="color: #ffffff;"><img src="'+countrylist[x][1]+'" class="nav-icon" style="margin-bottom:5px; width: 25px;">&nbsp&nbsp<p>'+countrylist[x][0]+'</p></a></li>');
+            }
+        }
+
+        function search(){
+            $(document).find( ".searchcode" ).removeClass("code-hide");
+            if(!$("#search_country").val() == "") $(document).find( ".searchcode" ).not('[class*="'+$("#search_country").val()+'"]').addClass("code-hide");
         }
 
         // #region Deaths and Recovered over Time Chart
@@ -597,111 +774,137 @@
                 }
                 }
             });
+
+            $("#card1_overlay").remove();
         }
         // #endregion
         
         // #region Overall cases, deaths and recovered Chart
         var pieChartCanvas1 = $('#pieChart1').get(0).getContext('2d');
-        var pieData1        = {
-            labels: [
-                'Active Cases', 
-                'Death',
-                'Recovered'
-            ],
-            datasets: [
-                {
-                data: [700,500,400],
-                backgroundColor : ['#ffc107', '#dc3545', '#28a745'],
-                }
-            ]
-        };
         var pieOptions1     = {
             maintainAspectRatio : false,
             responsive : true,
         };
-        var pieChart1 = new Chart(pieChartCanvas1, {
-            type: 'pie',
-            data: pieData1,
-            options: pieOptions1      
-        })
+        
+        function loadchart4(){
+            var pieData1 = {
+                labels: [
+                    'Active Cases', 
+                    'Death',
+                    'Recovered'
+                ],
+                datasets: [
+                    {
+                    data: [allcountries_data[allcountries_data_index].active, allcountries_data[allcountries_data_index].deaths, allcountries_data[allcountries_data_index].recovered],
+                    backgroundColor : ['#ffc107', '#dc3545', '#28a745'],
+                    }
+                ]
+            };
+
+            var pieChart1 = new Chart(pieChartCanvas1, {
+                type: 'pie',
+                data: pieData1,
+                options: pieOptions1      
+            });
+
+            $("#card6_overlay").remove();
+        }
         // #endregion
 
         // #region Total number of cases Chart
         var donutChartCanvas1 = $('#donutChart1').get(0).getContext('2d');
-        var donutData1        = {
-            labels: [
-                'Todays Cases', 
-                'Previous Cases',
-                'Cases from other countries', 
-            ],
-            datasets: [
-                {
-                data: [2,10,400],
-                backgroundColor : ['#331a00', '#ff8000', '#ffc107'],
-                }
-            ]
-        };
         var donutOptions1     = {
             maintainAspectRatio : false,
             responsive : true,
         };
-        var donutChart1 = new Chart(donutChartCanvas1, {
-            type: 'doughnut',
-            data: donutData1,
-            options: donutOptions1      
-        });
+        
+        function loadchart5(){
+            var donutData1  = {
+                labels: [
+                    'Todays Cases', 
+                    'Previous Cases',
+                    'Cases from other countries', 
+                ],
+                datasets: [
+                    {
+                    data: [allcountries_data[allcountries_data_index].todayCases, allcountries_data[allcountries_data_index].cases - allcountries_data[allcountries_data_index].todayCases, all_data.cases - allcountries_data[allcountries_data_index].cases],
+                    backgroundColor : ['#331a00', '#ff8000', '#ffc107'],
+                    }
+                ]
+            };
+
+            var donutChart1 = new Chart(donutChartCanvas1, {
+                type: 'doughnut',
+                data: donutData1,
+                options: donutOptions1      
+            });
+
+            $("#card7_overlay").remove();
+        }
         // #endregion
 
         // #region Total number of deaths Chart
         var donutChartCanvas2 = $('#donutChart2').get(0).getContext('2d');
-        var donutData2        = {
-            labels: [
-                'Todays death', 
-                'Previous deaths',
-                'Deaths from other countries'
-            ],
-            datasets: [
-                {
-                data: [10,60,1000],
-                backgroundColor : ['#331a00', '#ff8000', '#dc3545'],
-                }
-            ]
-        };
         var donutOptions2     = {
             maintainAspectRatio : false,
             responsive : true,
         };
-        var donutChart2 = new Chart(donutChartCanvas2, {
-            type: 'doughnut',
-            data: donutData2,
-            options: donutOptions2      
-        });
+
+        function loadchart6(){
+            var donutData2 = {
+                labels: [
+                    'Todays death', 
+                    'Previous deaths',
+                    'Deaths from other countries'
+                ],
+                datasets: [
+                    {
+                    data: [allcountries_data[allcountries_data_index].todayDeaths, allcountries_data[allcountries_data_index].deaths - allcountries_data[allcountries_data_index].todayDeaths, all_data.deaths - allcountries_data[allcountries_data_index].deaths],
+                    backgroundColor : ['#331a00', '#ff8000', '#dc3545'],
+                    }
+                ]
+            };
+
+            var donutChart2 = new Chart(donutChartCanvas2, {
+                type: 'doughnut',
+                data: donutData2,
+                options: donutOptions2      
+            });
+
+            $("#card8_overlay").remove();
+        }
         // #endregion
 
         // #region Total number of recoveries Chart
         var donutChartCanvas3 = $('#donutChart3').get(0).getContext('2d');
-        var donutData3        = {
-            labels: [
-                'Todays recoveries', 
-                'Previous recoveries',
-                'Recoveries from other countries'
-            ],
-            datasets: [
-                {
-                data: [10,60,1000],
-                backgroundColor : ['#339966', '#00ff99', '#28a745'],
-                }
-            ]
-        };
+        
         var donutOptions3     = {
             maintainAspectRatio : false,
             responsive : true,
         };
-        var donutChart3 = new Chart(donutChartCanvas3, {
-            type: 'doughnut',
-            data: donutData3,
-            options: donutOptions3      
-        });
+
+        function loadchart7(){
+            var donutData3 = {
+                labels: [
+                    allcountries_data[allcountries_data_index].country + ' recoveries', 
+                    'Recoveries from other countries'
+                ],
+                datasets: [
+                    {
+                    data: [allcountries_data[allcountries_data_index].recovered, all_data.recovered - allcountries_data[allcountries_data_index].recovered],
+                    backgroundColor : ['#339966', '#00ff99', '#28a745'],
+                    }
+                ]
+            };
+
+            var donutChart3 = new Chart(donutChartCanvas3, {
+                type: 'doughnut',
+                data: donutData3,
+                options: donutOptions3      
+            });
+
+            $("#card9_overlay").remove();
+        }
         // #endregion
     </script>
     <!-- #endregion -->
