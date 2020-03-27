@@ -179,6 +179,9 @@
                                         </span>
                                     </div>
                                 </div>
+                                <div id="card1_overlay" class="overlay">
+                                    <i class="fas fa-2x fa-sync-alt fa-spin"></i>
+                                </div>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -221,6 +224,9 @@
                                         </p>
                                     </div>
                                 </div>
+                                <div id="card2_overlay" class="overlay">
+                                    <i class="fas fa-2x fa-sync-alt fa-spin"></i>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -232,6 +238,9 @@
                                     <span class="info-box-text">Cases</span>
                                     <span id="country_cases" class="info-box-number">0</span>
                                 </div>
+                                <div id="card3_overlay" class="overlay">
+                                    <i class="fas fa-2x fa-sync-alt fa-spin"></i>
+                                </div>
                             </div>
                         </div>
                         <div class="col-12 col-sm-6 col-md-4">
@@ -240,6 +249,9 @@
                                 <div class="info-box-content">
                                     <span class="info-box-text">Deaths</span>
                                     <span id="country_deaths" class="info-box-number">0</span>
+                                </div>
+                                <div id="card4_overlay" class="overlay">
+                                    <i class="fas fa-2x fa-sync-alt fa-spin"></i>
                                 </div>
                             </div>
                         </div>
@@ -250,6 +262,9 @@
                                 <div class="info-box-content">
                                     <span class="info-box-text">Recovered</span>
                                     <span id="country_recovered" class="info-box-number">0</span>
+                                </div>
+                                <div id="card5_overlay" class="overlay">
+                                    <i class="fas fa-2x fa-sync-alt fa-spin"></i>
                                 </div>
                             </div>
                         </div>
@@ -263,6 +278,9 @@
                                 <div class="card-body">
                                     <canvas id="pieChart1" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
                                 </div>
+                                <div id="card6_overlay" class="overlay">
+                                    <i class="fas fa-2x fa-sync-alt fa-spin"></i>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -275,6 +293,9 @@
                                 <div class="card-body">
                                     <canvas id="donutChart1" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
                                 </div>
+                                <div id="card7_overlay" class="overlay">
+                                    <i class="fas fa-2x fa-sync-alt fa-spin"></i>
+                                </div>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -284,6 +305,9 @@
                                 </div>
                                 <div class="card-body">
                                     <canvas id="donutChart2" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                                </div>
+                                <div id="card8_overlay" class="overlay">
+                                    <i class="fas fa-2x fa-sync-alt fa-spin"></i>
                                 </div>
                             </div>
                         </div>
@@ -296,6 +320,9 @@
                                 </div>
                                 <div class="card-body">
                                     <canvas id="donutChart3" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                                </div>
+                                <div id="card9_overlay" class="overlay">
+                                    <i class="fas fa-2x fa-sync-alt fa-spin"></i>
                                 </div>
                             </div>
                         </div>
@@ -330,6 +357,9 @@
                                             </tbody>
                                         </table>
                                     </div>
+                                </div>
+                                <div id="card10_overlay" class="overlay">
+                                    <i class="fas fa-2x fa-sync-alt fa-spin"></i>
                                 </div>
                             </div>
                         </div>
@@ -489,7 +519,6 @@
         }
 
         function get_country_historydata(country_name){
-            alert(country_name);
             $.ajax({
                 url: "https://corona.lmao.ninja/v2/historical/" + country_name.toLowerCase(), 
                 dataType: 'json',
@@ -581,18 +610,26 @@
             $("#chart2_value1").parent().html($("#chart2_value1").parent().html() + value1 + "%");
             $("#chart2_value2").parent().html($("#chart2_value2").parent().html() + value2 + "%");
             $("#chart2_value3").parent().html($("#chart2_value3").parent().html() + value3 + "%");
+
+            $("#card2_overlay").remove();
         }
 
         function loadchart3(){
             $("#country_cases").html(allcountries_data[allcountries_data_index].cases);
             $("#country_deaths").html(allcountries_data[allcountries_data_index].deaths);
             $("#country_recovered").html(allcountries_data[allcountries_data_index].recovered);
+
+            $("#card3_overlay").remove();
+            $("#card4_overlay").remove();
+            $("#card5_overlay").remove();
         }
 
         function loadhistory(){
             for(var x = country_historydata_cases.length - 1 ; x >= 0 ; x-- ){
                 $("#country_history").append("<tr><td>"+country_historydata_cases[x][0]+"</td><td>"+country_historydata_cases[x][1]+"</td><td>"+country_historydata_deaths[x][1]+"</td></tr>");
             }
+
+            $("#card10_overlay").remove();
         }
 
         function findGetParameter(parameterName) {
@@ -700,6 +737,8 @@
                 }
                 }
             });
+
+            $("#card1_overlay").remove();
         }
         // #endregion
         
@@ -730,6 +769,8 @@
                 data: pieData1,
                 options: pieOptions1      
             });
+
+            $("#card6_overlay").remove();
         }
         // #endregion
 
@@ -760,6 +801,8 @@
                 data: donutData1,
                 options: donutOptions1      
             });
+
+            $("#card7_overlay").remove();
         }
         // #endregion
 
@@ -790,6 +833,8 @@
                 data: donutData2,
                 options: donutOptions2      
             });
+
+            $("#card8_overlay").remove();
         }
         // #endregion
 
@@ -820,6 +865,8 @@
                 data: donutData3,
                 options: donutOptions3      
             });
+
+            $("#card9_overlay").remove();
         }
         // #endregion
     </script>
