@@ -370,6 +370,122 @@
     <!-- ChartJS -->
     <script src="plugins/chart.js/Chart.min.js"></script>
     <script>
+        var current_country_id = 608;
+        var all_data;
+        var allcountries_data;
+        var allcountries_data_index;
+        var allcountries_data_cases_low;
+        var allcountries_data_cases_high;
+        var allcountries_data_deaths_low;
+        var allcountries_data_deaths_high;
+        var allcountries_data_recovered_low;
+        var allcountries_data_recovered_high;
+        var country_historydata;
+
+        $( document ).ready(function() {
+            if(current_country_id == null || current_country_id < 0 ){
+                alert("Unknown country. Will return you to the homepage after this message").
+                window.open("index", "_self");
+            }
+            else{
+                window.setTimeout(get_all_data, 3000);
+            }
+        });
+
+        function get_all_data(){
+            $.ajax({
+                url: "https://corona.lmao.ninja/all", 
+                dataType: 'json',
+                success: function(data){
+                    all_data =  data;
+                    get_allcountries_data();
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown){
+                    get_all_data();
+                }
+            });
+        }
+
+        function get_allcountries_data(){
+            $.ajax({
+                url: "https://corona.lmao.ninja/countries", 
+                dataType: 'json',
+                success: function(data){
+                    allcountries_data =  data;
+                    
+                    for(var x = 0 ; x < allcountries_data.length ; x++){
+                        if(allcountries_data[x].countryInfo._id == current_country_id){
+                            allcountries_data_index = x;
+                        }
+
+                        if(allcountries_data_cases_low == null){
+                            allcountries_data_cases_low = allcountries_data[x].cases;
+                        }
+                        else if(allcountries_data_cases_low > allcountries_data[x].cases){
+                            allcountries_data_cases_low = allcountries_data[x].cases;
+                        }
+                        if(allcountries_data_cases_high == null){
+                            allcountries_data_cases_high = allcountries_data[x].cases;
+                        }
+                        else if(allcountries_data_cases_high < allcountries_data[x].cases){
+                            allcountries_data_cases_high = allcountries_data[x].cases;
+                        }
+
+                        if(allcountries_data_deaths_low == null){
+                            allcountries_data_deaths_low = allcountries_data[x].deaths;
+                        }
+                        else if(allcountries_data_deaths_low > allcountries_data[x].deaths){
+                            allcountries_data_deaths_low = allcountries_data[x].deaths;
+                        }
+                        if(allcountries_data_deaths_high == null){
+                            allcountries_data_deaths_high = allcountries_data[x].deaths;
+                        }
+                        else if(allcountries_data_deaths_high < allcountries_data[x].deaths){
+                            allcountries_data_deaths_high = allcountries_data[x].deaths;
+                        }
+
+                        if(allcountries_data_recovered_low == null){
+                            allcountries_data_recovered_low = allcountries_data[x].recovered;
+                        }
+                        else if(allcountries_data_recovered_low > allcountries_data[x].recovered){
+                            allcountries_data_recovered_low = allcountries_data[x].recovered;
+                        }
+                        if(allcountries_data_recovered_high == null){
+                            allcountries_data_recovered_high = allcountries_data[x].recovered;
+                        }
+                        else if(allcountries_data_recovered_high < allcountries_data[x].recovered){
+                            allcountries_data_recovered_high = allcountries_data[x].recovered;
+                        }
+                    }
+
+                    if(allcountries_data_index == null){
+                        alert("Unsupported country. Will return you to the homepage after this message").
+                        window.open("index", "_self");
+                    }
+                    else{
+                        get_country_historydata(allcountries_data[allcountries_data_index].country);
+                    }
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown){
+                    get_allcountries_data();
+                }
+            });
+        }
+
+        function get_country_historydata(country_name){
+            alert(country_name);
+            $.ajax({
+                url: "https://corona.lmao.ninja/v2/historical/" + country_name.toLowerCase(), 
+                dataType: 'json',
+                success: function(data){
+                    country_historydata =  data;
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown){
+                    get_country_historydata();
+                }
+            });
+        }
+        
         // #region Deaths and Recovered over Time Chart
         var ticksStyle = {
             fontColor: '#495057',
