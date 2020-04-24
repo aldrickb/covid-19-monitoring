@@ -454,7 +454,7 @@
 
         function get_all_data(){
             $.ajax({
-                url: "https://corona.lmao.ninja/all", 
+                url: "https://corona.lmao.ninja/v2/all", 
                 dataType: 'json',
                 success: function(data){
                     all_data =  data;
@@ -468,7 +468,7 @@
 
         function get_allcountries_data(){
             $.ajax({
-                url: "https://corona.lmao.ninja/countries", 
+                url: "https://corona.lmao.ninja/v2/countries", 
                 dataType: 'json',
                 success: function(data){
                     allcountries_data =  data;
